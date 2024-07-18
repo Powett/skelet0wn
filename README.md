@@ -13,6 +13,8 @@
 ## Documentation
 [![Documentation Status](https://readthedocs.org/projects/skelet0wn/badge/?version=latest)](https://skelet0wn.readthedocs.io/en/latest/?badge=latest)
 
+## Content
+TBD
 
 ## Getting Started
 ### Prerequisites
@@ -81,6 +83,11 @@ workflow.prepare_environment(
 workflow.run(db_client)
 ```
 
+### Running the workflow
+When running from source, make sure to set the following environment variables:
+- `LOGURU_LEVEL`: Logging level, either `"TRACE"`, `"DEBUG"`, `"INFO"` (default), `"WARNING"` or `"ERROR"`.
+- `PYTHONPATH=$PATH_TO_SKELET0WN_REPO`: Base directory for Python module fetching, should be set to `$PWD` to allow `import skelet0wn` statements to be correctly handled.
+
 Please refer to the [documentation](https://skelet0wn.rtfd.io) for further explanations.
 
 ## Integrating/Modifying a `Limb`
@@ -91,7 +98,7 @@ As of now, `Joint`s bear little constraint nor organisation. Feel free to implem
 
 You can implement wrappers performing scheduling/control flow tasks such as [`Parallel`](./skelet0wn/limbs/joints/parallel/node.py), [`Sequences`](./skelet0wn/limbs/joints/sequences/node.py), data-transforming nodes such as [`Transformer`](./skelet0wn/limbs/joints/transformer/node.py), or any needed logic operation for your use cases.
 
-
+In the case of `Joint`s wrapping children `Limb`s, make sure to write `set_environment()` method accordingly, to set proper names and subfolders for the children `Limb`s.
 
 ### Integrating/Modifying a `Bone`
 
