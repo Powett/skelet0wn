@@ -14,7 +14,49 @@
 [![Documentation Status](https://readthedocs.org/projects/skelet0wn/badge/?version=latest)](https://skelet0wn.readthedocs.io/en/latest/?badge=latest)
 
 ## Content
-TBD
+The content of this repository is as follows:
+```bash
+.
+├── docs/                                   # Sphinx documentation folder
+├── LICENSE                                 # License file (MIT)
+├── misc/                                   # Helper scripts
+│   ├── build_all_bones.sh                  # (pre-)Build all Bone docker images 
+│   ├── build_bone.sh                       # (pre-)Build specific Bone docker image
+│   ├── format.sh                           # Format .py files
+│   ├── mongodb_quickstart.sh               # Quickstart a MongoDB docker instance
+│   ├── test.sh                             # (DEBUG) Run all samples
+│   └── test_short.sh                       # (DEBUG) Run some samples
+├── README.md                               # This file
+├── requirements.txt                        # PIP requirements
+├── samples/                                # Sample workflow provided as examples
+│   ├── ASREPRoast/                         # TGS offline cracking
+│   ├── Kerberoast/                         # TGT offline cracking
+│   ├── Kerbrute/                           # Kerberos user enumeration
+│   ├── Minimal/                            # Minimalistic sample (Nmap)
+│   ├── NXCEnum/                            # NetExec user and SMB shares enumeration
+│   ├── Parallel/                           # Sample to test the Parallel Joint
+│   └── Sequences/                          # Sample to test the Sequence Joint (several configurations)
+└── skelet0wn/                              # Main module folder
+    ├── exceptions.py                       # Custom exception types
+    ├── limbs/                              # Skelet0wn's base elements 
+    │   ├── bones/                          # Skelet0wn's integrated tools
+    │   │   ├── bone.py                     # Base class for integrated tools
+    │   │   ├── generic_bone_template/      # Template for Bone integration
+    │   │   ├── getnpusers/                 # Impacket's GetNPUsers
+    │   │   ├── getuserspns/                # Impacket's GetUserSPNs
+    │   │   ├── hashcat/                    # Hashcat, hash cracker
+    │   │   ├── kerbrute/                   # Kerbrute, Kerberos enumerating tool
+    │   │   ├── nmap/                       # Nmap, network scanning tool
+    │   │   └── nxc_smb/                    # NetExec (SMB only), SMB enumerator and vuln scanner
+    │   ├── joints/                         # Skelet0wn's logic elements
+    │   │   ├── files/                      # Upload files to skelet0wn, share files from a Limb to others
+    │   │   ├── joint.py                    # Base class for logic elements
+    │   │   ├── parallel/                   # Run two Limb in parallel (back and fore-ground)
+    │   │   ├── sequence/                   # Run Limbs sequentially
+    │   │   └── transformer/                # Perform a MongoDB query and transform the output
+    │   └── limb.py                         # Base skelet0wn class
+    └── utilities.py                        # Miscellaneous functions
+```
 
 ## Getting Started
 ### Prerequisites
@@ -162,6 +204,11 @@ The constructor should not need to be modified, except for the paths to the prev
 Contributions are welcome! Please file a pull request with detailed improvements/modifications and I'll review it.
 
 Please make sure your pull request is properly documented, typed and formatted. Use the [provided formatting script](./misc/format.sh).
+
+## Acknowledgements
+This development was tested against a custom version of [GOAD](https://github.com/Orange-Cyberdefense/GOAD), ported to AWS. Thank you [Orange-Cyberdefense](https://github.com/Orange-Cyberdefense) for your work.
+
+Credits to all tools developer evoked in this framework (NetExec, Nmap, Impacket, etc.).
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.

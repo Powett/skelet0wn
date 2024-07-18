@@ -76,6 +76,8 @@ class Bone(Limb):
             self.docker_image, self.docker_build_logs = docker_client.images.build(
                 path=self.docker_dockerfile_directory, tag=self.docker_image_tag
             )
+            for log in self.docker_build_logs:
+                self.log(f"{log}", level="TRACE")
         except Exception as exc:
             raise DockerBuildError(f"{exc}")
 

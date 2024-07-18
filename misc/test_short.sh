@@ -3,9 +3,9 @@
 # Debug script to run some samples
 
 export PYTHONPATH=$(pwd)
-export LOGURU_LEVEL=INFO
+export LOGURU_LEVEL=DEBUG
 # echo $(pwd)
-for sample in Kerbrute Parallel
+for sample in Kerbrute NXCEnum
 do
     echo "-------------------------------------------- $sample --------------------------------------------"
     python3 ./samples/$sample/sample.py
