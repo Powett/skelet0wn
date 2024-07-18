@@ -1,11 +1,11 @@
 # skelet0wn
 
 ## Overview
-*skelet0wn* is a cutting-edge pentesting automation framework designed to streamline and automate the entire cyber kill chain. As the core engine of an open-source project, skelet0wn enables penetration testers to efficiently execute complex workflows using docker-encapsulated tools and logic elements.
+*skelet0wn* is a cutting-edge penetration testing automation framework designed to streamline and automate the entire cyber kill chain. As the core engine of an open-source project, skelet0wn enables penetration testers to efficiently execute complex workflows using Docker-encapsulated tools and logic elements.
 
 ## Features
 - **Full Automation**: Automate all steps of the cyber kill chain from reconnaissance to post-exploitation.
-- **Docker Encapsulation**: Seamlessly run various pentesting tools encapsulated in Docker containers for consistent and reproducible environments.
+- **Docker Encapsulation**: Seamlessly run various penetration testing tools encapsulated in Docker containers for consistent and reproducible environments.
 - **Complex Workflows**: Create and manage intricate workflows combining multiple tools and logic elements.
 - **Extensibility**: Easily extend and customize with additional tools and scripts to fit specific testing needs.
 - **Open Source**: Completely open-source, fostering community contributions and transparency.
@@ -20,15 +20,15 @@ The content of this repository is as follows:
 ├── docs/                                   # Sphinx documentation folder
 ├── LICENSE                                 # License file (MIT)
 ├── misc/                                   # Helper scripts
-│   ├── build_all_bones.sh                  # (pre-)Build all Bone docker images 
-│   ├── build_bone.sh                       # (pre-)Build specific Bone docker image
+│   ├── build_all_bones.sh                  # (pre-)Build all Bone Docker images 
+│   ├── build_bone.sh                       # (pre-)Build specific Bone Docker image
 │   ├── format.sh                           # Format .py files
-│   ├── mongodb_quickstart.sh               # Quickstart a MongoDB docker instance
+│   ├── mongodb_quickstart.sh               # Quickstart a MongoDB Docker instance
 │   ├── test.sh                             # (DEBUG) Run all samples
 │   └── test_short.sh                       # (DEBUG) Run some samples
 ├── README.md                               # This file
 ├── requirements.txt                        # PIP requirements
-├── samples/                                # Sample workflow provided as examples
+├── samples/                                # Sample workflows provided as examples
 │   ├── ASREPRoast/                         # TGS offline cracking
 │   ├── Kerberoast/                         # TGT offline cracking
 │   ├── Kerbrute/                           # Kerberos user enumeration
@@ -51,7 +51,7 @@ The content of this repository is as follows:
     │   ├── joints/                         # Skelet0wn's logic elements
     │   │   ├── files/                      # Upload files to skelet0wn, share files from a Limb to others
     │   │   ├── joint.py                    # Base class for logic elements
-    │   │   ├── parallel/                   # Run two Limb in parallel (back and fore-ground)
+    │   │   ├── parallel/                   # Run two Limb in parallel (back and foreground)
     │   │   ├── sequence/                   # Run Limbs sequentially
     │   │   └── transformer/                # Perform a MongoDB query and transform the output
     │   └── limb.py                         # Base skelet0wn class
@@ -60,7 +60,7 @@ The content of this repository is as follows:
 
 ## Getting Started
 ### Prerequisites
-- docker installed (preferably in [rootless](https://docs.docker.com/engine/security/rootless/) mode, otherwise using the *skelet0wn* framework will require sudo privileges)
+- Docker installed (preferably in [rootless](https://docs.docker.com/engine/security/rootless/) mode, otherwise using the *skelet0wn* framework will require sudo privileges)
 - A MongoDB instance running (see [Setting up MongoDB](#setting-up-mongodb) for quickstart script)
 
 ### Installation
@@ -69,20 +69,20 @@ The content of this repository is as follows:
     git clone https://github.com/Powett/skelet0wn.git
     cd skelet0wn
     ```
-2. Install python packages (virtual environment recommended)
+2. Install Python packages (virtual environment recommended)
     ```bash
     python3 -m pip install -r requirements.txt
     ```
 ### Setting up MongoDB
 An existing running MongoDB server can be used.  
 
-Else, a starter script launching a docker instance can be found [here](./misc/mongodb_quickstart.sh).
+Else, a starter script launching a Docker instance can be found [here](./misc/mongodb_quickstart.sh).
 
 ```bash
 bash ./misc/mongodb_quickstart.sh
 ```
 
-**[WARNING]** Please be aware that this script might start a non-official MongoDB docker image (in case of missing AVX CPU support).  
+**[WARNING]** Please be aware that this script will start an unofficial MongoDB Docker image (in case of missing AVX CPU support, [nertworkweb/mongodb-no-avx](https://hub.docker.com/r/nertworkweb/mongodb-no-avx)).  
 **[WARNING]** Please be aware that the created MongoDB instance is not persisted upon container stop. Data will be lost.
 
 ## Usage
@@ -101,7 +101,7 @@ from limbs.joints import Sequence
 ```python
 client: MongoClient = MongoClient("mongodb://localhost:27017/")
 database_name = time.strftime("%Y%m%d-%H%M%S")
-db_client = client[database_name]
+mongo_database = client[database_name]
 ```
 3) Create your workflow: use `Joint`s to perform control-flow and logic operations, and `Bone`s to run tools. Provide `Bone`s with static configuration files (see TBD) and `Joint`s with specific configuration files/parameters.
 ```python
@@ -112,7 +112,7 @@ workflow = Sequence(
     ]
 )
 ```
-4) Setup the workflow's working directory and names: every `Limb` will have its own working subdirectory (isolated from others), mounted within the docker container (if any). The `Limb` naming and directory generation is automatic, using the workflow topology.
+4) Setup the workflow's working directory and names: every `Limb` will have its own working subdirectory (isolated from others), mounted within the Docker container (if any). The `Limb` naming and directory generation is automatic, using the workflow topology.
 ```python
 workflow.prepare_environment(
     output_dir=os.getcwd() + "/outputs",
@@ -122,7 +122,7 @@ workflow.prepare_environment(
 5) Run workflow: As all *skelet0wn* classes herit from the same `Limb` class, running a worfklow is simply done by calling `run(mongo_db)` on the top-level `Limb`.
 ```python
 # Run workflow
-workflow.run(db_client)
+workflow.run(mongo_database)
 ```
 
 ### Running the workflow
@@ -154,22 +154,22 @@ skelet0wn/limbs/bones/generic_bone_template
 ├── interface.yml
 └── node.py
 ```
-It is advised to respect the same folder organization, but non-python files can be stored elsewhere as long as the filepaths are correctly configured in `node.py`.
+It is advised to respect the same folder organization, but non-Python files can be stored elsewhere as long as the filepaths are correctly configured in `node.py`.
 
 ##### `Dockerfile`
-Define here the docker image in which to run the tool to be integrated.
-- Prefer compact docker images (`alpine`, `kalilinux`) to avoid having too many different images bloating up.
+Define here the Docker image in which to run the tool to be integrated.
+- Prefer compact Docker images (`alpine`, `kalilinux`) to avoid having too many different images bloating up.
 - Install dependancies, if any
 
 It is strongly advised to keep the *entrypoint* logic **as set by default**: copying the `./entrypoint.sh` script into the container and using it as entry.
 
 #### `entrypoint.sh`
-Define here pre-run, run, post-run command(s) to be run in the docker container. In most cases, the run command should simply be  `./tool $@` (+ stdout redirection if not done by command argument), to ensure proper parameter, status code and task priority handling.
+Define here pre-run, run, post-run command(s) to be run in the Docker container. In most cases, the run command should simply be  `./tool $@` (+ stdout redirection if not done by command argument), to ensure proper parameter, status code and task priority handling.
 
 It is possible to wrap the run command to filter the status code, so as to return non-zero (error) status codes in a more permissive or restrictive way (e.g. in [`Hashcat`](./skelet0wn/limbs/bones/hashcat/node.py)).
 
 #### `__init__.py`
-Usual python module initializion file, should usually be empty.
+Usual Python module initializion file, should usually be empty.
 
 #### `interface.yml`
 Describe here the static interface of the tool to be wrapped:
@@ -177,7 +177,7 @@ Describe here the static interface of the tool to be wrapped:
 - **command**: ordered list of Jinja2 template elements to build the command. Template variables should be arguments as listed above, that will be put in place when building the command.
 
 #### `node.py`
-Main python file for the `Bone` class being defined.
+Main Python file for the `Bone` class being defined.
 
 The constructor should not need to be modified, except for the paths to the previously defined files.
 
@@ -193,10 +193,10 @@ The constructor should not need to be modified, except for the paths to the prev
   
 
 ## TODO
-- [ ] Writing detailed documentation
-- [ ] Integrating more `Bone`s and `Joint`s
-- [ ] Adding a GUI for easier workflow generation
-- [ ] Adding version management on `Limb`s ?
+- [ ] Write detailed documentation
+- [ ] Integrate more `Bone`s and `Joint`s
+- [ ] Add a GUI for easier workflow generation
+- [ ] Add version management on `Limb`s ?
 - [ ] Reorganise `Joint`s
 - [ ] ...
 
@@ -208,7 +208,7 @@ Please make sure your pull request is properly documented, typed and formatted. 
 ## Acknowledgements
 This development was tested against a custom version of [GOAD](https://github.com/Orange-Cyberdefense/GOAD), ported to AWS. Thank you [Orange-Cyberdefense](https://github.com/Orange-Cyberdefense) for your work.
 
-Credits to all tools developer evoked in this framework (NetExec, Nmap, Impacket, etc.).
+Credits to all tool developers evoked in this framework (NetExec, Nmap, Impacket, etc.).
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
