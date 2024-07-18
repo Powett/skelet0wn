@@ -1,0 +1,18 @@
+IP:
+  type: dynamic
+  query:
+    root: n0.1
+    collection: "temp"
+    filter:
+    projection: 
+      result: 1
+      # _id: 0
+arguments:
+  type: static
+  value: "--shares"
+username:
+  type: static
+  value: "samwell.tarly"
+password:
+  type: static
+  value: "Heartsbane"

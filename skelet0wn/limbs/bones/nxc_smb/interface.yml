@@ -1,0 +1,21 @@
+# Define here the interface of the tool
+
+# inputs: list of name and mandatory status
+inputs:
+  - name: IP
+    mandatory: 1
+  - name: arguments
+    mandatory: 0
+  - name: username
+    mandatory: 0
+  - name: password
+    mandatory: 0
+
+# Template command to be run
+command:
+- "smb"
+- "{% if arguments %}{{arguments}}{% endif %}"
+- "{% if username %}-u {{username}}{% endif %}"
+- "{% if password %}-p {{password}}{% endif %}"
+- "--"
+- "{{IP}}"

@@ -1,0 +1,8 @@
+__pycache__/
+.mypy_cache/
+limbs/__pycache__/
+outputs/
+inputs/
+config/
+tmp/
+docs/_*

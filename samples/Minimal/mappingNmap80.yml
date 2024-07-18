@@ -1,0 +1,6 @@
+IP:
+  type: static
+  value: "192.168.56.1/27"
+arguments:
+  type: static
+  value: "-p80"

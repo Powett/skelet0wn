@@ -1,0 +1,11 @@
+IP:
+  type: dynamic
+  query:
+    collection: "subnets"
+    filter:
+    projection: 
+      bad_field: 1
+      # _id: 0
+arguments:
+  type: static
+  value: "-p1-50000"

@@ -1,0 +1,14 @@
+domain:
+  type: static
+  value: "north.sevenkingdoms.local"
+dc_ip:
+  type: static
+  value: 192.168.56.11
+user_list:
+  type: dynamic
+  query:
+    root: previous
+    collection: temp
+    projection: 
+      result.filepath: 1
+      # _id: 0

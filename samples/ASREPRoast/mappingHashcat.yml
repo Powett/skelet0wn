@@ -1,0 +1,22 @@
+hash_file:
+  type: dynamic
+  query:
+    root: previous
+    collection: "temp"
+    projection: 
+      result.filepath: 1
+
+wordlist_file:
+  # type: dynamic
+  # query:
+  #   root: n0.3
+  #   collection: "temp"
+  #   projection:
+  #     result.filepath: 1
+  type: static
+  value: "/usr/share/wordlists/rockyou.txt"
+
+format_code:
+  type: static
+  value: "18200"
+

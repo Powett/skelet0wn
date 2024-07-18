@@ -1,0 +1,27 @@
+DC_IP:
+  type: static
+  value: "192.168.56.11"
+domain:
+  type: dynamic
+  query:
+    root: previous
+    collection: temp
+    projection: 
+      result.domain: 1
+      # _id: 0
+username:
+  type: dynamic
+  query:
+    root: previous
+    collection: temp
+    projection: 
+      result.username: 1
+      # _id: 0
+password:
+  type: dynamic
+  query:
+    root: previous
+    collection: temp
+    projection: 
+      result.password: 1
+      # _id: 0

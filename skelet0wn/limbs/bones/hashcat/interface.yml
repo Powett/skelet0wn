@@ -1,0 +1,22 @@
+# Define here the interface of the tool
+
+# inputs: list of name and mandatory status
+inputs:
+- name: hash_file
+  mandatory: 1
+- name: wordlist_file
+  mandatory: 1
+- name: format_code
+  mandatory: 1
+- name: rule_file
+  mandatory: 0
+# - name: output
+#   mandatory: 0
+
+# command: ordered list of elements to put together to build the command to be run
+command:
+- "-m {{format_code}}"
+- "{% if rule_file %}-r {{rule_file}}{% endif %}"
+- "-o {% if output %}{{output}}{% else %}/mnt/skelet0wn/output.txt{% endif %}"
+- "{{hash_file}}"
+- "{{wordlist_file}}"

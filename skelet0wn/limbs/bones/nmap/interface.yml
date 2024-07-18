@@ -1,0 +1,14 @@
+inputs:
+- name: IP
+  mandatory: 1
+- name: color
+  mandatory: 0
+# - name: output
+#   mandatory: 0
+- name: arguments
+  mandatory: 0
+command: 
+- "{% if arguments %}{{arguments}}{% endif %}"
+- "-oX {% if output %}{{output}}{% else %}/mnt/skelet0wn/output.xml{% endif %}"
+- "--"
+- "{{IP}}"

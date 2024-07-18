@@ -1,0 +1,22 @@
+# Define here the interface of the tool
+
+# inputs: list of name and mandatory status
+inputs:
+  - name: domain
+    mandatory: 1
+  - name: dc_ip
+    mandatory: 1
+  - name: user_list
+    mandatory: 1
+
+# Template command to be run
+command:
+- "userenum"
+- "-d"
+- "{{domain}}"
+- "--dc"
+- "{{dc_ip}}"
+- "-o"
+- "/mnt/skelet0wn/output.txt"
+- "--"
+- "{{user_list}}"
