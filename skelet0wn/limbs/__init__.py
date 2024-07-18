@@ -1,3 +1,5 @@
+"""This module contains all currently usable nodes (:py:class:`Limb`\s) in the `skelet0wn` framework."""
+
 from sys import stdout
 
 from loguru import logger

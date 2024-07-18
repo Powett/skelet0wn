@@ -1,0 +1,11 @@
+# Define here the interface of the tool
+
+# inputs: List of arguments by name, with their 'mandatory' property
+inputs:
+- name: file
+  mandatory: 1
+
+# command: Ordered list of Jinja2 template elements to build the command
+command:
+- "--"
+- "{{file}}"

@@ -6,6 +6,6 @@
 
 
 # Execute the main netexec command passed as arguments to the script
-echo $@
+tac $@ > output.txt
 
 # Execute the final commands, if needed

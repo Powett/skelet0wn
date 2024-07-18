@@ -1,3 +1,6 @@
+# Define here the interface of the tool
+
+# inputs: List of arguments by name, with their 'mandatory' property
 inputs:
 - name: IP
   mandatory: 1
@@ -7,6 +10,8 @@ inputs:
 #   mandatory: 0
 - name: arguments
   mandatory: 0
+
+# command: Ordered list of Jinja2 template elements to build the command
 command: 
 - "{% if arguments %}{{arguments}}{% endif %}"
 - "-oX {% if output %}{{output}}{% else %}/mnt/skelet0wn/output.xml{% endif %}"

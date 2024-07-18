@@ -1,6 +1,6 @@
 # Define here the interface of the tool
 
-# inputs: list of name and mandatory status
+# inputs: List of arguments by name, with their 'mandatory' property
 inputs:
 - name: DC_IP
   mandatory: 0
@@ -13,6 +13,7 @@ inputs:
 - name: format
   mandatory: 0
 
+# command: Ordered list of Jinja2 template elements to build the command
 command:
 - "-dc-ip"
 - "{{DC_IP}}"
