@@ -2,9 +2,10 @@ docker==7.1.0
 loguru==0.7.2
 myst-parser==3.0.1
 pymongo==4.8.0
-Sphinx==7.4.5
+Sphinx>=7.3.5
 sphinx-autobuild==2024.4.16
 sphinx-autodoc-typehints==2.2.3
+sphinxawesome-theme==5.2.0 
 sphinxcontrib-applehelp==1.0.8
 sphinxcontrib-devhelp==1.0.6
 sphinxcontrib-htmlhelp==2.0.5
