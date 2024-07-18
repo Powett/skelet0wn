@@ -51,17 +51,12 @@ class Transformer(Joint):
         result: Any = self.transformation(values)
 
         self.log(f"Obtained {result}", depth_increment=1, level="DEBUG")
-        instert_result: InsertOneResult = mongo_database["temp"].insert_one(
+        insert_result: InsertOneResult = mongo_database["temp"].insert_one(
             {"result": result}
         )
-
-        steps_db = mongo_database["steps"]
-        steps_db.insert_one(
-            {
-                "name": self.name,
-                "class": self.__class__.__name__,
-                "outputCollection": "temp",
-                "outputID": instert_result.inserted_id,
-            }
+        if insert_result is None or insert_result.acknowledged is False:
+            raise Exception("Could not insert element in temp")
+        self.store_metadata(
+            mongo_database, outputCollection="temp", outputID=insert_result.inserted_id
         )
         self.log("OK, exiting", level="SUCCESS")

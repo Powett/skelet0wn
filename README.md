@@ -45,45 +45,43 @@ bash ./misc/mongodb_quickstart.sh
 
 ### Designing a workflow
 Sample workflows are provided in [./samples/](./samples/), ready to be used or copied for modification.
-Please refer to the [documentation](https://skelet0wn.rtfd.io) for further explanations.
 
-### Running a workflow
-As all *skelet0wn* classes herit from the same `Limb` class, running a worfklow is simply done by calling `run(mongo_db)` on the top-level `Limb`.
+Example (from the provided [minimal workflow example](./samples/Minimal/sample.py)), decomposed:
 
-Example (from the provided [minimal workflow example](./samples/Minimal/sample.py))
-
+1) Import the needed `Limb`s
 ```python
-import os
-import time
-
-from pymongo import MongoClient
-
 from limbs.bones import Nmap
 from limbs.joints import Sequence
-
-# Connect to MongoDB
+```
+2) Connect to MongoDB database (should be running already)
+```python
 client: MongoClient = MongoClient("mongodb://localhost:27017/")
 database_name = time.strftime("%Y%m%d-%H%M%S")
 db_client = client[database_name]
-
-
-# Create workflow (two Nmap nodes with static parameters only)
+```
+3) Create your workflow: use `Joint`s to perform control-flow and logic operations, and `Bone`s to run tools. Provide `Bone`s with static configuration files (see TBD) and `Joint`s with specific configuration files/parameters.
+```python
 workflow = Sequence(
     children=[
         Nmap(mapping_file="./samples/Minimal/mappingNmap22.yml"),
         Nmap(mapping_file="./samples/Minimal/mappingNmap80.yml"),
     ]
 )
-
-# Set names and create outputs folders
+```
+4) Setup the workflow's working directory and names: every `Limb` will have its own working subdirectory (isolated from others), mounted within the docker container (if any). The `Limb` naming and directory generation is automatic, using the workflow topology.
+```python
 workflow.prepare_environment(
-    output_dir=os.getcwd() + "/outputs", shared_dir=os.getcwd() + "/outputs/shared"
+    output_dir=os.getcwd() + "/outputs",
+    shared_dir=os.getcwd() + "/outputs/shared"
 )
-
+```
+5) Run workflow: As all *skelet0wn* classes herit from the same `Limb` class, running a worfklow is simply done by calling `run(mongo_db)` on the top-level `Limb`.
+```python
 # Run workflow
 workflow.run(db_client)
-
 ```
+
+Please refer to the [documentation](https://skelet0wn.rtfd.io) for further explanations.
 
 ## Integrating/Modifying a `Limb`
 The process is fairly similar to integrate and modify a `Limb`.
@@ -92,6 +90,8 @@ The process is fairly similar to integrate and modify a `Limb`.
 As of now, `Joint`s bear little constraint nor organisation. Feel free to implement any logic in new `Joint`s !
 
 You can implement wrappers performing scheduling/control flow tasks such as [`Parallel`](./skelet0wn/limbs/joints/parallel/node.py), [`Sequences`](./skelet0wn/limbs/joints/sequences/node.py), data-transforming nodes such as [`Transformer`](./skelet0wn/limbs/joints/transformer/node.py), or any needed logic operation for your use cases.
+
+
 
 ### Integrating/Modifying a `Bone`
 

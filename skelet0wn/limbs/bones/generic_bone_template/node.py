@@ -1,5 +1,5 @@
-from pymongo.database import Database
 from bson.binary import Binary
+from pymongo.database import Database
 from pymongo.results import InsertOneResult
 
 from skelet0wn.limbs.bones import Bone
@@ -24,9 +24,9 @@ class GenericBone(Bone):
         # parse tool-specific raw output
         with open(f"{self.output_dir}/output.txt", "rb") as f:
             outputRaw = Binary(f.read())
-            
+
         # process output if needed
-        
+
         # insert data in MongoDB Database
         insert_result: InsertOneResult = mongo_database["files"].insert_one(
             {

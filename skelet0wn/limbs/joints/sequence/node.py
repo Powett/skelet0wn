@@ -55,6 +55,7 @@ class Sequence(Joint):
                 if self.stop_on_success:
                     return
         self.log("Reached last child", level="DEBUG")
+        self.store_metadata(mongo_database)
         self.log("OK, exiting", level="SUCCESS")
 
     def interrupt(self) -> None:

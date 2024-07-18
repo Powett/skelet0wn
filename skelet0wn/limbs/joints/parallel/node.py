@@ -49,6 +49,7 @@ class Parallel(Joint):
             f"Waiting on background limb exit... ", depth_increment=1, level="DEBUG"
         )
         background_thread.join()
+        self.store_metadata(mongo_database)
         self.log("OK, exiting", level="SUCCESS")
 
     def prepare_environment(

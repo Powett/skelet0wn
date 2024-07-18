@@ -2,7 +2,7 @@ import re
 
 from bson.binary import Binary
 from pymongo.database import Database
-from pymongo.results import UpdateResult
+from pymongo.results import InsertOneResult, UpdateResult
 
 from skelet0wn.limbs.bones import Bone
 
@@ -45,8 +45,12 @@ class Kerbrute(Bone):
 
         with open(f"{self.output_dir}/output.txt", "rb") as f:
             rawOutput = Binary(f.read())
-        mongo_database["files"].insert_one(
+        insert_result: InsertOneResult = mongo_database["files"].insert_one(
             {"filename": "kerbrute_userenum.txt", "content": rawOutput}
         )
+        if insert_result is None or insert_result.acknowledged is False:
+            raise Exception("Could not insert element in files")
         # store step metadata
-        super().store_metadata(mongo_database)
+        self.store_metadata(
+            mongo_database, outputCollection="files", outputID=insert_result.inserted_id
+        )

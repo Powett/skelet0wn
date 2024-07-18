@@ -98,10 +98,10 @@ class Nmap(Bone):
                 }
             )
             assert insert_result.acknowledged is True
+            childID = insert_result.inserted_id
 
         except Exception as exc:
             raise Exception("Could not feed raw output in database: {exc}")
-        childID = insert_result.inserted_id
 
         # store step metadata
         super().store_metadata(mongo_database, "files", childID)

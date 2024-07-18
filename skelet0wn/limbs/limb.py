@@ -5,6 +5,7 @@ from typing import Optional
 from bson.objectid import ObjectId
 from loguru import logger
 from pymongo.database import Database
+from pymongo.results import InsertOneResult
 
 
 class Limb(ABC):
@@ -89,4 +90,6 @@ class Limb(ABC):
         }
         for field in other_fields:
             fields[field] = other_fields[field]
-        steps_db.insert_one(fields)
+        insert_result: InsertOneResult = steps_db.insert_one(fields)
+        if insert_result is None or insert_result.acknowledged is False:
+            raise Exception("Could not insert element in steps")

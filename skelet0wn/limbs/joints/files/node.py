@@ -38,12 +38,12 @@ class UploadFile(Joint):
                 data = Binary(f.read())
         except Exception as exc:
             raise Exception("Could not read file {self.file_path}: {exc}")
-        result: InsertOneResult = mongo_database["files"].insert_one(
+        insert_result: InsertOneResult = mongo_database["files"].insert_one(
             {"filename": self.file_name, "content": data}
         )
-        if result is None:
+        if insert_result is None:
             raise Exception('Could not download file "{self.file_path}" to database')
-        self.store_metadata(mongo_database, "files", result.inserted_id)
+        self.store_metadata(mongo_database, "files", insert_result.inserted_id)
         self.log("OK, exiting", level="SUCCESS")
 
 
@@ -71,16 +71,16 @@ class DownloadFile(Joint):
         except Exception as exc:
             raise Exception(f'Could not download file "{self.file_name}": {exc}')
         filepath = f"/mnt/shared/{self.file_name}"
-        instert_result: InsertOneResult = mongo_database["temp"].insert_one(
+        insert_result: InsertOneResult = mongo_database["temp"].insert_one(
             {"result": {"filepath": filepath}}
         )
-        if instert_result is None or instert_result.acknowledged is False:
+        if insert_result is None or insert_result.acknowledged is False:
             raise Exception("Could not insert element in temp")
         self.store_metadata(
-            mongo_database, outputCollection="temp", outputID=instert_result.inserted_id
+            mongo_database, outputCollection="temp", outputID=insert_result.inserted_id
         )
         self.log(
-            f"Downloaded {self.file_name} in {filepath}, instert_result name in temp",
+            f"Downloaded {self.file_name} in {filepath}, insert_result name in temp",
             level="DEBUG",
         )
         self.log("OK, exiting", level="SUCCESS")
