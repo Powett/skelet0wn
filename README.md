@@ -85,6 +85,20 @@ bash ./misc/mongodb_quickstart.sh
 **[WARNING]** Please be aware that this script will start an unofficial MongoDB Docker image (in case of missing AVX CPU support, [nertworkweb/mongodb-no-avx](https://hub.docker.com/r/nertworkweb/mongodb-no-avx)).  
 **[WARNING]** Please be aware that the created MongoDB instance is not persisted upon container stop. Data will be lost.
 
+### [OPTIONAL] Prebuild Bone(s)
+As of now, the equivalent of `docker build` call in Python SDK does not stream logs, but waits for completion due to the underlying implementation of this SDK. This does not impact the building process, but it prevents you from having a status on the build process, which can be lengthy.
+
+If you want to explicitly build a single Bone in terminal (hence having detailed logs of the build process), this [script](./misc/build_bone.sh) is provided. To use it, run from the root repository folder:
+
+```bash
+./misc/build_bone.sh [bone_name]
+```
+
+To build all bones available in the `./skelet0wn/limbs/bones/` folder in a similar manner, use the following command (from root repository folder):
+```bash
+./misc/build_all_bones.sh
+```
+
 ## Usage
 
 ### Designing a workflow
@@ -140,7 +154,7 @@ As of now, `Joint`s bear little constraint nor organisation. Feel free to implem
 
 You can implement wrappers performing scheduling/control flow tasks such as [`Parallel`](./skelet0wn/limbs/joints/parallel/node.py), [`Sequences`](./skelet0wn/limbs/joints/sequences/node.py), data-transforming nodes such as [`Transformer`](./skelet0wn/limbs/joints/transformer/node.py), or any needed logic operation for your use cases.
 
-In the case of `Joint`s wrapping children `Limb`s, make sure to write `set_environment()` method accordingly, to set proper names and subfolders for the children `Limb`s.
+In the case of control-flow-type `Joint`s (wrapping children `Limb`s and scheduling them), make sure to write `set_environment()` method accordingly, to set proper names and subfolders for the children `Limb`s.
 
 ### Integrating/Modifying a `Bone`
 
@@ -162,6 +176,14 @@ Define here the Docker image in which to run the tool to be integrated.
 - Install dependancies, if any
 
 It is strongly advised to keep the *entrypoint* logic **as set by default**: copying the `./entrypoint.sh` script into the container and using it as entry.
+
+To debug the building process of your `Bone`, use the `./misc/build_bone.sh` script, as explained [here](#optional-prebuild-bones).
+
+To debug the running phase of your `Bone`, build it then run the following command from the root repository folder (`$bone_name` being the name of the built image for this `Bone`):
+
+```bash
+docker run -it --entrypoint sh --rm skelet0wn/$bone_name:latest
+```
 
 #### `entrypoint.sh`
 Define here pre-run, run, post-run command(s) to be run in the Docker container. In most cases, the run command should simply be  `./tool $@` (+ stdout redirection if not done by command argument), to ensure proper parameter, status code and task priority handling.
@@ -190,11 +212,12 @@ The constructor should not need to be modified, except for the paths to the prev
 [**Composite object tracking**] The `outputID` and `outputCollection` parameters to `.store_metadata()` allow to mark the location of the main element inserted by this `Bone` execution in the Database.
 - They default to None if no significant element is to be reused by direct reference of other `Limb`s
 - In the case you need to keep track of several elements IDs and collections created by a `Bone` $b_0$, you can create a composite element (e.g. stored in the "tmp" Collection) containing several pairs (elementID, collection). In order to dereference the sub-objects, use `Transformer`s to dereference each sub-object [WIP].
-  
+
 
 ## TODO
-- [ ] Write detailed documentation
+- [x] Write detailed documentation
 - [ ] Integrate more `Bone`s and `Joint`s
+- [ ] Stream `docker build` logs, using low-level client workaround
 - [ ] Add a GUI for easier workflow generation
 - [ ] Add version management on `Limb`s ?
 - [ ] Reorganise `Joint`s
