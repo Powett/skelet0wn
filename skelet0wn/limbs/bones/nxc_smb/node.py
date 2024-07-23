@@ -23,7 +23,7 @@ class NxcSmb(Bone):
             mapping_file=mapping_file,
         )
 
-    def store_results(self, mongo_database: Database) -> None:
+    def store_results(self, mongo_database: Database, run_id: str) -> None:
         db_machines = mongo_database["machines"]
         conn = sqlite3.connect(f"{self.output_dir}/default/smb.db")
         cursor = conn.cursor()
@@ -32,6 +32,7 @@ class NxcSmb(Bone):
         try:
             cursor.execute("SELECT * FROM hosts")
             rows = cursor.fetchall()
+            self.log(f"Got data from NXC SMB scanning: {rows}", level="TRACE")
 
             # Get column names from the cursor description
             column_names = [description[0] for description in cursor.description]
@@ -40,19 +41,26 @@ class NxcSmb(Bone):
                 for i, field in enumerate(column_names):
                     fields[field] = row[i]
 
-                ip, hostname = fields["ip"], fields["hostname"]
-                fields.pop("ip", None)
-                fields.pop("id", None)
-                fields.pop("hostname", None)
+                # Reformatting fields
+                reformatted_fields = dict()
+                for field in ["domain", "dc", "os"]:
+                    reformatted_fields[field] = fields[field]
+                    fields.pop(field)
+                ip = fields.pop("ip")
+                hostname = fields.pop("hostname")
+                # Put remainder in proper service document
+                reformatted_fields["services.SMB"] = fields
 
                 # MongoDB query
                 query = {"IP.ipv4": ip}
                 # Update operation
                 update = {
-                    "$set": {"IP.ipv4": ip},
+                    "$set": reformatted_fields,
                     "$addToSet": {"hostnames": hostname},
-                    "$set": fields,
                 }
+                self.log(
+                    f"Adding hostname {hostname} and {fields} to {ip}", level="TRACE"
+                )
                 # Perform the upsert operation
                 result: UpdateResult = db_machines.update_one(
                     query, update, upsert=True
@@ -149,7 +157,7 @@ class NxcSmb(Bone):
                         query = {"IP.ipv4": ip}
                         update = {
                             "$set": {
-                                f"shares.{share_name}": {
+                                f"services.SMB.shares.{share_name}": {
                                     "permissions": permissions,
                                     "remark": remark,
                                 }
@@ -172,4 +180,4 @@ class NxcSmb(Bone):
                         found_shares = False
 
         # store step metadata
-        super().store_metadata(mongo_database)
+        super().store_metadata(mongo_database, run_id)

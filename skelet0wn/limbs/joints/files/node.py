@@ -30,7 +30,7 @@ class UploadFile(Joint):
         self.file_path = file_path
         self.file_name = file_name
 
-    def run(self, mongo_database: Database) -> None:
+    def run(self, mongo_database: Database, run_id: str) -> None:
         self.log(f"Running limb {self.name}, {self.__class__.__name__}")
         try:
             assert isfile(self.file_path)
@@ -43,7 +43,7 @@ class UploadFile(Joint):
         )
         if insert_result is None:
             raise Exception('Could not download file "{self.file_path}" to database')
-        self.store_metadata(mongo_database, "files", insert_result.inserted_id)
+        self.store_metadata(mongo_database, run_id, "files", insert_result.inserted_id)
         self.log("OK, exiting", level="SUCCESS")
 
 
@@ -59,7 +59,7 @@ class DownloadFile(Joint):
         super().__init__()
         self.file_name = file_name
 
-    def run(self, mongo_database: Database) -> None:
+    def run(self, mongo_database: Database, run_id: str) -> None:
         self.log(f"Running limb {self.name}, {self.__class__.__name__}")
         result: Optional[Collection] = mongo_database["files"].find_one(
             {"filename": self.file_name}
@@ -77,7 +77,10 @@ class DownloadFile(Joint):
         if insert_result is None or insert_result.acknowledged is False:
             raise Exception("Could not insert element in temp")
         self.store_metadata(
-            mongo_database, outputCollection="temp", outputID=insert_result.inserted_id
+            mongo_database,
+            run_id,
+            outputCollection="temp",
+            outputID=insert_result.inserted_id,
         )
         self.log(
             f"Downloaded {self.file_name} in {filepath}, insert_result name in temp",

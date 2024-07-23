@@ -20,7 +20,7 @@ class Kerbrute(Bone):
             mapping_file=mapping_file,
         )
 
-    def store_results(self, mongo_database: Database) -> None:
+    def store_results(self, mongo_database: Database, run_id: str) -> None:
         with open(f"{self.output_dir}/output.txt", "r") as f:
             lines = f.readlines()
 
@@ -44,13 +44,16 @@ class Kerbrute(Bone):
                     self.log(f"Added user {username}@{domain}", level="DEBUG")
 
         with open(f"{self.output_dir}/output.txt", "rb") as f:
-            rawOutput = Binary(f.read())
+            outputRaw = Binary(f.read())
         insert_result: InsertOneResult = mongo_database["files"].insert_one(
-            {"filename": "kerbrute_userenum.txt", "content": rawOutput}
+            {"filename": "kerbrute_userenum.txt", "content": outputRaw}
         )
         if insert_result is None or insert_result.acknowledged is False:
             raise Exception("Could not insert element in files")
         # store step metadata
         self.store_metadata(
-            mongo_database, outputCollection="files", outputID=insert_result.inserted_id
+            mongo_database,
+            run_id,
+            outputCollection="files",
+            outputID=insert_result.inserted_id,
         )

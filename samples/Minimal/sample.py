@@ -8,7 +8,16 @@ from skelet0wn.limbs.joints import Sequence
 
 # Connect to MongoDB
 client: MongoClient = MongoClient("mongodb://localhost:27017/")
-database_name = time.strftime("%Y%m%d-%H%M%S")
+
+# Set unique runID
+run_id = time.strftime("%Y%m%d-%H%M%S")
+
+# if no database was specified, create a new one
+database_name = os.getenv("DATABASE_NAME")
+if database_name is None:
+    database_name = time.strftime("%Y%m%d-%H%M%S")
+mongo_database = client[database_name]
+
 mongo_database = client[database_name]
 # Create workflow (two Nmap nodes with static parameters only)
 workflow = Sequence(
@@ -24,4 +33,4 @@ workflow.prepare_environment(
 )
 
 # Run workflow
-workflow.run(mongo_database)
+workflow.run(mongo_database, run_id)

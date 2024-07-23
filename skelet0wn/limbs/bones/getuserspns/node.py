@@ -19,7 +19,7 @@ class GetUserSPNs(Bone):
         )
 
     # Implement here the tool-specific parsing and database feeding
-    def store_results(self, mongo_database: Database) -> None:
+    def store_results(self, mongo_database: Database, run_id: str) -> None:
         # parse raw
         with open(f"{self.output_dir}/output.txt", "rb") as f:
             outputRaw = Binary(f.read())
@@ -28,6 +28,7 @@ class GetUserSPNs(Bone):
             {
                 "filename": "tgs.txt",
                 "content": outputRaw,
+                "content_decoded": outputRaw.decode(),
             }
         )
         if insert_result.acknowledged is False:
@@ -35,4 +36,4 @@ class GetUserSPNs(Bone):
         childID = insert_result.inserted_id
 
         # store step metadata
-        super().store_metadata(mongo_database, "files", childID)
+        super().store_metadata(mongo_database, run_id, "files", childID)

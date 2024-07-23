@@ -42,7 +42,7 @@ class Transformer(Joint):
         self.projection = projection
         self.transformation = transformation
 
-    def run(self, mongo_database: Database) -> None:
+    def run(self, mongo_database: Database, run_id: str) -> None:
         self.log(f"Running limb {self.name}, {self.__class__.__name__}")
         db_collection = mongo_database[self.collection]
         cursor: Cursor = db_collection.find(self.filter_crit, self.projection)
@@ -57,6 +57,9 @@ class Transformer(Joint):
         if insert_result is None or insert_result.acknowledged is False:
             raise Exception("Could not insert element in temp")
         self.store_metadata(
-            mongo_database, outputCollection="temp", outputID=insert_result.inserted_id
+            mongo_database,
+            run_id,
+            outputCollection="temp",
+            outputID=insert_result.inserted_id,
         )
         self.log("OK, exiting", level="SUCCESS")

@@ -8,3 +8,4 @@ netexec $@
 
 # Execute the final command
 cp -r ~/.nxc/workspaces/default /mnt/skelet0wn/
+chmod -R a+rw /mnt/skelet0wn/default

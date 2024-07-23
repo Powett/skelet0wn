@@ -111,9 +111,14 @@ Example (from the provided [minimal workflow example](./samples/Minimal/sample.p
 from limbs.bones import Nmap
 from limbs.joints import Sequence
 ```
-2) Connect to MongoDB database (should be running already)
+2) Connect to MongoDB database (should be running already) and set unique run ID
 ```python
 client: MongoClient = MongoClient("mongodb://localhost:27017/")
+
+# Set unique run_id
+run_id = time.strftime("%Y%m%d-%H%M%S")
+
+# create a new database on the client, or use an existing one
 database_name = time.strftime("%Y%m%d-%H%M%S")
 mongo_database = client[database_name]
 ```
@@ -133,10 +138,10 @@ workflow.prepare_environment(
     shared_dir=os.getcwd() + "/outputs/shared"
 )
 ```
-5) Run workflow: As all *skelet0wn* classes herit from the same `Limb` class, running a worfklow is simply done by calling `run(mongo_db)` on the top-level `Limb`.
+5) Run workflow: As all *skelet0wn* classes herit from the same `Limb` class, running a worfklow is simply done by calling `run(mongo_db, run_id)` on the top-level `Limb`.
 ```python
 # Run workflow
-workflow.run(mongo_database)
+workflow.run(mongo_database, run_id)
 ```
 
 ### Running the workflow

@@ -81,12 +81,12 @@ class Bone(Limb):
         except Exception as exc:
             raise DockerBuildError(f"{exc}")
 
-    def fetch_arguments(self, mongo_database: Database) -> bool:
+    def fetch_arguments(self, mongo_database: Database, run_id: str) -> bool:
         """Returns the :py:class:`Limb` arguments availability. If False, calling run() is certain to fail.
 
         Args:
             mongo_database (:py:class:`pymongo.database.Database`\): MongoDB database to fetch the arguments from.
-
+            run_id (str): Unique identifier of this specific run. Necessary to reuse the same database in several runs.
         Raises:
             :py:class:`BoneStateError`\: If the :py:class:`Bone` is not in the correct state to perform the task.
             :py:class:`MappingError`\: If one or several mandatory arguments had no correct provider.
@@ -194,6 +194,7 @@ class Bone(Limb):
                         # Query output location of provided limb
                         query = {
                             "name": provider_name,
+                            "run_id": run_id,
                             "outputCollection": {"$ne": None},
                             "outputID": {"$ne": None},
                         }
@@ -320,33 +321,31 @@ class Bone(Limb):
             raise DockerRunError(f"{self.docker_run_status}")
 
     @abstractmethod
-    def store_results(self, mongo_database: Database) -> None:
+    def store_results(self, mongo_database: Database, run_id: str) -> None:
         """Mandatory method for a:py:class:`Bone` class, parsing the logs and/or output files and feeding them to the database.
 
         Args:
             mongo_database (:py:class:`pymongo.database.Database`\): MongoDB database to store the results in.
-
+            run_id (str): Unique identifier of this specific run. Necessary to reuse the same database in several runs.
         Raises:
             ValueError
         """
         pass
 
-    def run(self, mongo_database: Database) -> None:
+    def run(self, mongo_database: Database, run_id: str) -> None:
         """Base method for a Limb.
 
         Args:
             mongo_database (:py:class:`pymongo.database.Database`\): MongoDB database to fetch the arguments from and store the results in.
-
-        Raises:
-
+            run_id (str): Unique identifier of this specific run. Necessary to reuse the same database in several runs.
         """
         self.log(f"Running limb {self.name}, {self.__class__.__name__}")
 
         # Fetch arguments
-        fetch_arguments_success = self.fetch_arguments(mongo_database)
+        fetch_arguments_success = self.fetch_arguments(mongo_database, run_id)
 
         if not fetch_arguments_success:
-            self.store_metadata(mongo_database)
+            self.store_metadata(mongo_database, run_id)
             raise BoneStateError(
                 name=self.name,
                 class_name=self.__class__.__name__,
@@ -360,7 +359,7 @@ class Bone(Limb):
             self.build_command()
         except Exception as exc:
             self.log("Failed", level="ERROR")
-            self.store_metadata(mongo_database)  # Store limb metadata anyway
+            self.store_metadata(mongo_database, run_id)  # Store limb metadata anyway
             raise LimbError(
                 limb=self.name,
                 class_name=self.__class__.__name__,
@@ -373,7 +372,7 @@ class Bone(Limb):
         try:
             self.run_command()
         except Exception as exc:
-            self.store_metadata(mongo_database)  # Store limb metadata anyway
+            self.store_metadata(mongo_database, run_id)  # Store limb metadata anyway
             # raise LimbError(limb=self.name,class_name=self.__class__.__name__, msg=f"Could not run command: {exc}")
             self.log(f"Run error {exc}", level="ERROR")
 
@@ -387,10 +386,10 @@ class Bone(Limb):
         # Feed DB
         self.log(f"Parsing results... ", depth_increment=1)
         try:
-            self.store_results(mongo_database)
+            self.store_results(mongo_database, run_id)
         except Exception as exc:
             self.log("Failed", level="WARNING")
-            self.store_metadata(mongo_database)  # Store limb metadata anyway
+            self.store_metadata(mongo_database, run_id)  # Store limb metadata anyway
             raise LimbError(
                 limb=self.name,
                 class_name=self.__class__.__name__,
@@ -420,6 +419,7 @@ class Bone(Limb):
     def store_metadata(
         self,
         mongo_database: Database,
+        run_id: str,
         outputCollection: Optional[str] = None,
         outputID: Optional[ObjectId] = None,
         other_fields: dict = dict(),
@@ -430,4 +430,6 @@ class Bone(Limb):
             "runStatus": str(self.docker_run_status),
         }
         other_fields["command"] = self.built_command
-        super().store_metadata(mongo_database, outputCollection, outputID, other_fields)
+        super().store_metadata(
+            mongo_database, run_id, outputCollection, outputID, other_fields
+        )

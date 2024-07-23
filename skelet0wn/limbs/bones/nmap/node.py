@@ -27,7 +27,7 @@ class Nmap(Bone):
             mapping_file=mapping_file,
         )
 
-    def store_results(self, mongo_database: Database) -> None:
+    def store_results(self, mongo_database: Database, run_id: str) -> None:
         db_machines = mongo_database["machines"]
 
         # open file
@@ -56,7 +56,7 @@ class Nmap(Bone):
                 update = {
                     "$set": {
                         "IP": {"ipv4": add},
-                        "status": status_field.get("_state"),
+                        "status": status_field.get("state"),
                     }
                 }
                 db_machines.update_one(query, update, upsert=True)
@@ -94,7 +94,9 @@ class Nmap(Bone):
                 outputRaw = Binary(f.read())
             insert_result: InsertOneResult = mongo_database["files"].insert_one(
                 {
+                    "filename": "nmap_run.xml",
                     "content": outputRaw,
+                    "content_decoded": outputRaw.decode(),
                 }
             )
             assert insert_result.acknowledged is True
@@ -104,4 +106,4 @@ class Nmap(Bone):
             raise Exception("Could not feed raw output in database: {exc}")
 
         # store step metadata
-        super().store_metadata(mongo_database, "files", childID)
+        super().store_metadata(mongo_database, run_id, "files", childID)

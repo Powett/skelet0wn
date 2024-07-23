@@ -1,4 +1,5 @@
 import os
+import time
 from abc import ABC, abstractmethod
 from typing import Optional
 
@@ -24,11 +25,12 @@ class Limb(ABC):
         self.logger = logger.bind(name="UNINIT".center(14), depth_pad="")
 
     @abstractmethod
-    def run(self, mongo_database: Database) -> None:
+    def run(self, mongo_database: Database, run_id: str) -> None:
         """Base method for a Limb.
 
         Args:
             mongo_database (:py:class:`pymongo.database.Database`\): MongoDB database to fetch the arguments from and store the results in.
+            run_id (str): Unique identifier of this specific run. Necessary to reuse the same database in several runs.
         """
         pass
 
@@ -69,6 +71,7 @@ class Limb(ABC):
     def store_metadata(
         self,
         mongo_database: Database,
+        run_id: str,
         outputCollection: Optional[str] = None,
         outputID: Optional[ObjectId] = None,
         other_fields: dict = dict(),
@@ -77,6 +80,7 @@ class Limb(ABC):
 
         Args:
             mongo_database (:py:class:`pymongo.database.Database`\): MongoDB database to store the data in.
+            run_id (str): Unique identifier of this specific run. Necessary to reuse the same database in several runs.
             outputCollection (str | None, optional): Name of the collection where the :py:class:`Limb` stored its output, when relevant. Defaults to None.
             outputID (:py:class:`bson.objectid.ObjectId` | None, optional): ObjectId at which the :py:class:`Limb` stored its output, when relevant. Defaults to None.
             other_fields (dict, optional): Additional fields to store in the MongoDB Document. Defaults to dict().
@@ -87,6 +91,8 @@ class Limb(ABC):
             "class": self.__class__.__name__,
             "outputCollection": outputCollection,
             "outputID": outputID,
+            "time": time.strftime("%Y%m%d-%H%M%S"),
+            "run_id": run_id,
         }
         for field in other_fields:
             fields[field] = other_fields[field]

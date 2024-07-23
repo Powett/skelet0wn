@@ -20,7 +20,7 @@ class GenericBone(Bone):
         )
 
     # Implement here the tool-specific parsing and database feeding
-    def store_results(self, mongo_database: Database) -> None:
+    def store_results(self, mongo_database: Database, run_id: str) -> None:
         # parse tool-specific raw output
         with open(f"{self.output_dir}/output.txt", "rb") as f:
             outputRaw = Binary(f.read())
@@ -32,6 +32,7 @@ class GenericBone(Bone):
             {
                 "filename": "reverted_file.txt",
                 "content": outputRaw,
+                "content_decoded": outputRaw.decode(),
             }
         )
         # Assert the insertion was successful
@@ -40,4 +41,4 @@ class GenericBone(Bone):
         childID = insert_result.inserted_id
 
         # store step metadata
-        super().store_metadata(mongo_database, "files", childID)
+        super().store_metadata(mongo_database, run_id, "files", childID)

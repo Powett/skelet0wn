@@ -26,13 +26,13 @@ class Parallel(Joint):
         self.front = front
         self.back = back
 
-    def run(self, mongo_database: Database) -> None:
+    def run(self, mongo_database: Database, run_id: str) -> None:
         self.log(f"Running limb {self.name}, {self.__class__.__name__}")
         self.log(f"Starting background limb... ", depth_increment=1, level="DEBUG")
 
         def background_wrapper() -> None:
             try:
-                self.back.run(mongo_database)
+                self.back.run(mongo_database, run_id)
             except Exception as exc:
                 self.log(
                     f"Background child encountered exception: {exc}", level="WARNING"
@@ -42,14 +42,14 @@ class Parallel(Joint):
         background_thread.start()
 
         self.log(f"Starting foreground limb... ", depth_increment=1, level="DEBUG")
-        self.front.run(mongo_database)
+        self.front.run(mongo_database, run_id)
 
         self.back.interrupt()
         self.log(
             f"Waiting on background limb exit... ", depth_increment=1, level="DEBUG"
         )
         background_thread.join()
-        self.store_metadata(mongo_database)
+        self.store_metadata(mongo_database, run_id)
         self.log("OK, exiting", level="SUCCESS")
 
     def prepare_environment(

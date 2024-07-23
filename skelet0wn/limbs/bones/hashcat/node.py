@@ -23,7 +23,7 @@ class Hashcat(Bone):
         )
 
     # Implement here the tool-specific parsing and database feeding
-    def store_results(self, mongo_database: Database) -> None:
+    def store_results(self, mongo_database: Database, run_id: str) -> None:
         # parse raw
         with open(f"{self.output_dir}/output.txt", "rb") as f:
             outputRaw = Binary(f.read())
@@ -66,7 +66,8 @@ class Hashcat(Bone):
         insert_result: Optional[InsertOneResult] = mongo_database["files"].insert_one(
             {
                 "filename": "cracked_file.txt",
-                "content": Binary(outputRaw),
+                "content": outputRaw,
+                "content_decoded": outputRaw.decode(),
             }
         )
         if insert_result is None or insert_result.acknowledged is False:
@@ -74,4 +75,4 @@ class Hashcat(Bone):
         childID = insert_result.inserted_id
 
         # store step metadata
-        super().store_metadata(mongo_database, "files", childID)
+        super().store_metadata(mongo_database, run_id, "files", childID)
