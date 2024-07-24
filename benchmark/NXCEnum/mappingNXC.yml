@@ -1,0 +1,12 @@
+IP:
+  type: dynamic
+  query:
+    root: previous
+    collection: "temp"
+    filter:
+    projection: 
+      result: 1
+      # _id: 0
+arguments:
+  type: static
+  value: "--users"
