@@ -1,0 +1,12 @@
+DC_IP:
+  type: static
+  value: "192.168.56.11"
+domain:
+  type: static
+  value: "north.sevenkingdoms.local"
+username:
+  type: static
+  value: "samwell.tarly"
+password:
+  type: static
+  value: "Heartsbane"
