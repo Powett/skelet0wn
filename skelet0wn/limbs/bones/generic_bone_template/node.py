@@ -27,7 +27,7 @@ class GenericBone(Bone):
     # Implement here the tool-specific parsing and database feeding
     def store_results(self, mongo_database: Database, run_id: str) -> None:
         # parse tool-specific raw output
-        with open(f"{self.output_dir}/output.txt", "rb") as f:
+        with open(f"{self.output_dir}/generic_output.txt", "rb") as f:
             outputRaw = Binary(f.read())
 
         # process output if needed

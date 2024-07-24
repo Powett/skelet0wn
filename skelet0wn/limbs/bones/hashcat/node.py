@@ -30,10 +30,9 @@ class Hashcat(Bone):
     # Implement here the tool-specific parsing and database feeding
     def store_results(self, mongo_database: Database, run_id: str) -> None:
         # parse raw
-        with open(f"{self.output_dir}/output.txt", "rb") as f:
+        with open(f"{self.output_dir}/hashcat_output.txt", "rb") as f:
             outputRaw = Binary(f.read())
-        with open(f"{self.output_dir}/output.txt", "r") as f:
-            tickets = f.readlines()
+        tickets = outputRaw.decode().split("\n")
 
         regexes = {
             "18200": r"\$krb5asrep\$\d*\$([^\@]*)@([^\:]*):[0-9a-f]*\$[0-9a-f]*:(.*)",

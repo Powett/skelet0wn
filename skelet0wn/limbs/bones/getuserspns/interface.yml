@@ -17,7 +17,7 @@ command:
 - "{{DC_IP}}"
 - "-request"
 - "-outputfile"
-- "{% if output %}{{output}}{% else %}/mnt/skelet0wn/output.txt{% endif %}"
+- "{% if output %}{{output}}{% else %}/mnt/skelet0wn/userspns_output.txt{% endif %}"
 - "{% if password %}{% else %}-no-pass {% endif %}"
 - "--"
 - "{{domain}}/{{username}}{% if password %}:{{password}}{% endif %}"

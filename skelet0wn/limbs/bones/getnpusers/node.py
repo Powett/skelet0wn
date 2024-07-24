@@ -26,7 +26,7 @@ class GetNPUsers(Bone):
     # Implement here the tool-specific parsing and database feeding
     def store_results(self, mongo_database: Database, run_id: str) -> None:
         # parse raw
-        with open(f"{self.output_dir}/output.txt", "rb") as f:
+        with open(f"{self.output_dir}/npusers_output.txt", "rb") as f:
             outputRaw = Binary(f.read())
 
         insert_result: InsertOneResult = mongo_database["files"].insert_one(

@@ -17,6 +17,6 @@ command:
 - "--dc"
 - "{{dc_ip}}"
 - "-o"
-- "/mnt/skelet0wn/output.txt"
+- "/mnt/skelet0wn/kerbrute_output.txt"
 - "--"
 - "{{user_list}}"

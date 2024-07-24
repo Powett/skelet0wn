@@ -39,7 +39,11 @@ class UploadFile(Joint):
         except Exception as exc:
             raise Exception("Could not read file {self.file_path}: {exc}")
         insert_result: InsertOneResult = mongo_database["files"].insert_one(
-            {"filename": self.file_name, "content": data}
+            {
+                "filename": self.file_name,
+             "content": data,
+             "content_decoded": data.decode()
+             }
         )
         if insert_result is None:
             raise Exception('Could not download file "{self.file_path}" to database')

@@ -7,7 +7,7 @@
 hashcat $@
 # hashcat returns non-zero if exhausted
 code=$?
-chmod o+rw /mnt/skelet0wn/output.txt
+chmod o+rw /mnt/skelet0wn/hashcat_output.txt
 if (( $code < 0 )); then
     exit $code
 else
