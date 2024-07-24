@@ -1,0 +1,20 @@
+hash_file:
+  type: dynamic
+  query:
+    root: previous
+    collection: "temp"
+    projection: 
+      result.filepath: 1
+
+wordlist_file:
+  type: dynamic
+  query:
+    root: n0.2
+    collection: "temp"
+    projection:
+      result.filepath: 1
+      
+format_code:
+  type: static
+  value: "13100"
+
