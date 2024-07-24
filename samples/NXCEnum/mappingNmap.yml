@@ -1,14 +1,6 @@
 IP:
-  type: dynamic
-  query:
-    collection: "subnets"
-    filter:
-    projection: 
-      cidr: 1
-      # _id: 0
+  type: static
+  value: "192.168.56.1/27"
 arguments:
   type: static
   value: "-p1-500"
-output:
-  type: static
-  value: /mnt/skelet0wn/output.xml

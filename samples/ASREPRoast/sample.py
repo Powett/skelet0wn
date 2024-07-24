@@ -7,7 +7,7 @@ from pymongo import MongoClient
 from pymongo.results import InsertOneResult
 
 from skelet0wn.limbs.bones import GetNPUsers, Hashcat
-from skelet0wn.limbs.joints import DownloadFile, Sequence, Transformer, UploadFile
+from skelet0wn.limbs.joints import ShareFile, Sequence, Transformer, UploadFile
 from skelet0wn.utilities import logger_setup
 
 logger_setup()
@@ -55,8 +55,8 @@ workflow = Sequence(
         ),
         GetNPUsers("./samples/ASREPRoast/mappingGNU.yml"),
         UploadFile("./samples/ASREPRoast/my_word_list.txt", "wordlist.txt"),
-        DownloadFile("wordlist.txt"),
-        DownloadFile("tgt.txt"),
+        ShareFile("wordlist.txt"),
+        ShareFile("tgt.txt"),
         Hashcat("./samples/ASREPRoast/mappingHashcat.yml"),
     ]
 )

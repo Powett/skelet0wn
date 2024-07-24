@@ -30,15 +30,6 @@ else:
     logger.info(f"  * Using existing database {database_name}... ")
 mongo_database = client[database_name]
 
-# Add an initial object
-logger.debug("  * Inserting first object... ")
-insert_result: Optional[InsertOneResult] = mongo_database["subnets"].insert_one(
-    {"cidr": "192.168.56.1/27"}
-)
-if insert_result is None or insert_result.acknowledged is False:
-    logger.error("Could not insert object")
-    exit(1)
-initialID = insert_result.inserted_id
 # Define workflow and build Docker images
 logger.info("########## Building workflow")
 

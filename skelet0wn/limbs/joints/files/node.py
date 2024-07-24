@@ -12,7 +12,7 @@ from skelet0wn.limbs.joints import Joint
 
 class UploadFile(Joint):
     """Logic element allowing to upload a file from host to `skelet0wn` database.
-    To use the file as input to another :py:class:`Limb`, a :py:class:`DownloadFile` :py:class:`Limb` should be inserted in-between.
+    To use the file as input to another :py:class:`Limb`, a :py:class:`ShareFile` :py:class:`Limb` should be inserted in-between.
 
     Attributes:
         file_path (str): Full host path to the uploaded file.
@@ -47,7 +47,7 @@ class UploadFile(Joint):
         self.log("OK, exiting", level="SUCCESS")
 
 
-class DownloadFile(Joint):
+class ShareFile(Joint):
     """Logic element allowing to download a file from `skelet0wn` database to the shared folder.
 
     Attributes:

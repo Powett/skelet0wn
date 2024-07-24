@@ -5,7 +5,7 @@ from loguru import logger
 from pymongo import MongoClient
 
 from skelet0wn.limbs.bones import Kerbrute
-from skelet0wn.limbs.joints import DownloadFile, Sequence, UploadFile
+from skelet0wn.limbs.joints import ShareFile, Sequence, UploadFile
 from skelet0wn.utilities import logger_setup
 
 logger_setup()
@@ -35,7 +35,7 @@ logger.info("########## Building workflow")
 workflow = Sequence(
     children=[
         UploadFile("./samples/Kerbrute/userlist.txt", "userlist.txt"),
-        DownloadFile("userlist.txt"),
+        ShareFile("userlist.txt"),
         Kerbrute("./samples/Kerbrute/mappingKerbrute.yml"),
     ]
 )
