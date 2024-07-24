@@ -5,6 +5,7 @@ from pymongo.database import Database
 from pymongo.results import InsertOneResult
 
 from skelet0wn.limbs.bones import Bone
+from skelet0wn.utilities import get_package_relative_path
 
 
 class GetNPUsers(Bone):
@@ -12,8 +13,12 @@ class GetNPUsers(Bone):
 
     def __init__(self, mapping_file: str) -> None:
         super().__init__(
-            interface_file="./skelet0wn/limbs/bones/getnpusers/interface.yml",
-            docker_dockerfile_directory="./skelet0wn/limbs/bones/getnpusers/",
+            interface_file=get_package_relative_path(
+                "limbs/bones/getnpusers/interface.yml"
+            ),
+            docker_dockerfile_directory=get_package_relative_path(
+                "limbs/bones/getnpusers/"
+            ),
             docker_image_tag="skelet0wn/getnpusers",
             mapping_file=mapping_file,
         )

@@ -3,6 +3,7 @@ from pymongo.database import Database
 from pymongo.results import InsertOneResult
 
 from skelet0wn.limbs.bones import Bone
+from skelet0wn.utilities import get_package_relative_path
 
 
 class GenericBone(Bone):
@@ -13,8 +14,12 @@ class GenericBone(Bone):
     def __init__(self, mapping_file: str) -> None:
         super().__init__(
             # Replace with actual path to Bone configuration
-            interface_file="./skelet0wn/limbs/bones/generic_bone_template/interface.yml",
-            docker_dockerfile_directory="./skelet0wn/limbs/bones/generic_bone_template/",
+            interface_file=get_package_relative_path(
+                "limbs/bones/generic_bone_template/interface.yml"
+            ),
+            docker_dockerfile_directory=get_package_relative_path(
+                "limbs/bones/generic_bone_template/"
+            ),
             docker_image_tag="skelet0wn/generic_bone_template",
             mapping_file=mapping_file,
         )

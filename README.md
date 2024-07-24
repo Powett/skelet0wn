@@ -126,8 +126,8 @@ mongo_database = client[database_name]
 ```python
 workflow = Sequence(
     children=[
-        Nmap(mapping_file="./samples/Minimal/mappingNmap22.yml"),
-        Nmap(mapping_file="./samples/Minimal/mappingNmap80.yml"),
+        Nmap(mapping_file = "./samples/Minimal/mappingNmap22.yml"),
+        Nmap(mapping_file = "./samples/Minimal/mappingNmap80.yml"),
     ]
 )
 ```

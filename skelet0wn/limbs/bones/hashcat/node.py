@@ -7,6 +7,7 @@ from pymongo.database import Database
 from pymongo.results import InsertOneResult
 
 from skelet0wn.limbs.bones import Bone
+from skelet0wn.utilities import get_package_relative_path
 
 
 class Hashcat(Bone):
@@ -16,8 +17,12 @@ class Hashcat(Bone):
 
     def __init__(self, mapping_file: str) -> None:
         super().__init__(
-            interface_file="./skelet0wn/limbs/bones/hashcat/interface.yml",
-            docker_dockerfile_directory="./skelet0wn/limbs/bones/hashcat/",
+            interface_file=get_package_relative_path(
+                "limbs/bones/hashcat/interface.yml"
+            ),
+            docker_dockerfile_directory=get_package_relative_path(
+                "limbs/bones/hashcat/"
+            ),
             docker_image_tag="skelet0wn/hashcat",
             mapping_file=mapping_file,
         )

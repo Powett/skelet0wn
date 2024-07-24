@@ -5,6 +5,7 @@ from pymongo.database import Database
 from pymongo.results import InsertOneResult, UpdateResult
 
 from skelet0wn.limbs.bones import Bone
+from skelet0wn.utilities import get_package_relative_path
 
 
 class Kerbrute(Bone):
@@ -14,8 +15,12 @@ class Kerbrute(Bone):
 
     def __init__(self, mapping_file: str) -> None:
         super().__init__(
-            interface_file="./skelet0wn/limbs/bones/kerbrute/interface.yml",
-            docker_dockerfile_directory="./skelet0wn/limbs/bones/kerbrute/",
+            interface_file=get_package_relative_path(
+                "limbs/bones/kerbrute/interface.yml"
+            ),
+            docker_dockerfile_directory=get_package_relative_path(
+                "limbs/bones/kerbrute/"
+            ),
             docker_image_tag="skelet0wn/kerbrute",
             mapping_file=mapping_file,
         )

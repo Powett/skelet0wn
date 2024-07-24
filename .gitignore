@@ -4,5 +4,9 @@ limbs/__pycache__/
 outputs/
 inputs/
 config/
+build/
+dist/
 tmp/
 docs/_*
+skelet0wn.egg-info/
+skelet0wn/*.pyc

@@ -1,0 +1,3 @@
+graft skelet0wn/
+global-exclude *.py[cod]
+global-exclude *~ *.py[cod] __pycache__

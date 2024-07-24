@@ -8,6 +8,7 @@ from pymongo.database import Database
 from pymongo.results import UpdateResult
 
 from skelet0wn.limbs.bones import Bone
+from skelet0wn.utilities import get_package_relative_path
 
 
 class NxcSmb(Bone):
@@ -17,8 +18,12 @@ class NxcSmb(Bone):
 
     def __init__(self, mapping_file: str) -> None:
         super().__init__(
-            interface_file="./skelet0wn/limbs/bones/nxc_smb/interface.yml",
-            docker_dockerfile_directory="./skelet0wn/limbs/bones/nxc_smb/",
+            interface_file=get_package_relative_path(
+                "limbs/bones/nxc_smb/interface.yml"
+            ),
+            docker_dockerfile_directory=get_package_relative_path(
+                "limbs/bones/nxc_smb/"
+            ),
             docker_image_tag="skelet0wn/nxc_smb",
             mapping_file=mapping_file,
         )

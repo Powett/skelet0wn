@@ -6,6 +6,7 @@ from pymongo.results import InsertOneResult
 
 from skelet0wn.exceptions import *
 from skelet0wn.limbs.bones import Bone
+from skelet0wn.utilities import get_package_relative_path
 
 
 def parse_xml(xml_file: str) -> ET.ElementTree:
@@ -21,8 +22,8 @@ class Nmap(Bone):
 
     def __init__(self, mapping_file: str) -> None:
         super().__init__(
-            interface_file="./skelet0wn/limbs/bones/nmap/interface.yml",
-            docker_dockerfile_directory="./skelet0wn/limbs/bones/nmap/",
+            interface_file=get_package_relative_path("limbs/bones/nmap/interface.yml"),
+            docker_dockerfile_directory=get_package_relative_path("limbs/bones/nmap/"),
             docker_image_tag="skelet0wn/nmap",
             mapping_file=mapping_file,
         )
