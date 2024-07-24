@@ -151,9 +151,9 @@ workflow.run(mongo_database, run_id)
 ```
 
 ### Running the workflow
-When running from source, make sure to set the following environment variables:
+When running from source, you can set the following environment variables:
 - `LOGURU_LEVEL`: Logging level, either `"TRACE"`, `"DEBUG"`, `"INFO"` (default), `"WARNING"` or `"ERROR"`.
-- `PYTHONPATH=$PATH_TO_SKELET0WN_REPO`: Base directory for Python module fetching, should be set to `$PWD` to allow `import skelet0wn` statements to be correctly handled.
+- `DATABASE_NAME`: MongoDB database to use. If unspecified, a new `$DATE-$TIME` database will automatically be created.
 
 Please refer to the [documentation](https://skelet0wn.rtfd.io) for further explanations.
 

@@ -2,7 +2,6 @@
 
 # Debug script to run some samples
 
-export PYTHONPATH=$(pwd)
 export LOGURU_LEVEL=DEBUG
 export DATABASE_NAME=common_db
 # echo $(pwd)
