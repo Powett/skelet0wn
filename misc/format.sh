@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # Formatting and typing script
+# install dependencies beforehand:
+# pip install isort black mypy
 
 isort .
 black .

@@ -19,6 +19,7 @@ The content of this repository is as follows:
 .
 ├── docs/                                   # Sphinx documentation folder
 ├── LICENSE                                 # License file (MIT)
+├── MANIFEST.in                             # pip package configuration file
 ├── misc/                                   # Helper scripts
 │   ├── build_all_bones.sh                  # (pre-)Build all Bone Docker images 
 │   ├── build_bone.sh                       # (pre-)Build specific Bone Docker image
@@ -27,7 +28,6 @@ The content of this repository is as follows:
 │   ├── test.sh                             # (DEBUG) Run all samples
 │   └── test_short.sh                       # (DEBUG) Run some samples
 ├── README.md                               # This file
-├── requirements.txt                        # PIP requirements
 ├── samples/                                # Sample workflows provided as examples
 │   ├── ASREPRoast/                         # TGS offline cracking
 │   ├── Kerberoast/                         # TGT offline cracking
@@ -36,6 +36,7 @@ The content of this repository is as follows:
 │   ├── NXCEnum/                            # NetExec user and SMB shares enumeration
 │   ├── Parallel/                           # Sample to test the Parallel Joint
 │   └── Sequences/                          # Sample to test the Sequence Joint (several configurations)
+├── setup.py                                # pip package configuration file
 └── skelet0wn/                              # Main module folder
     ├── exceptions.py                       # Custom exception types
     ├── limbs/                              # Skelet0wn's base elements 
@@ -63,15 +64,20 @@ The content of this repository is as follows:
 - Docker installed (preferably in [rootless](https://docs.docker.com/engine/security/rootless/) mode, otherwise using the *skelet0wn* framework will require sudo privileges)
 - A MongoDB instance running (see [Setting up MongoDB](#setting-up-mongodb) for quickstart script)
 
-### Installation
+### Installation - pip
+1. Install the package using pip (virtual environment recommended)
+```bash
+python3 -m pip install git+https://github.com/Powett/skelet0wn.git
+```
+### Installation - from source
 1. Clone the repository:
     ```bash
     git clone https://github.com/Powett/skelet0wn.git
     cd skelet0wn
     ```
-2. Install Python packages (virtual environment recommended)
+2. Build and install Python package (virtual environment recommended)
     ```bash
-    python3 -m pip install -r requirements.txt
+    python3 -m pip install .
     ```
 ### Setting up MongoDB
 An existing running MongoDB server can be used.  
