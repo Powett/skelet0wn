@@ -1,0 +1,14 @@
+
+ Performance counter stats for 'python ASREPRoast/sample.py' (5 runs):
+
+            418.45 msec task-clock                       #    0.012 CPUs utilized               ( +-  7.63% )
+               375      context-switches                 #  896.162 /sec                        ( +-  3.65% )
+                19      cpu-migrations                   #   45.406 /sec                        ( +-  8.90% )
+             8,579      page-faults                      #   20.502 K/sec                       ( +-  0.02% )
+   <not supported>      cycles                                                                
+   <not supported>      instructions                                                          
+   <not supported>      branches                                                              
+   <not supported>      branch-misses                                                         
+
+            34.747 +- 0.972 seconds time elapsed  ( +-  2.80% )
+

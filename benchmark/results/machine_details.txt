@@ -1,0 +1,2 @@
+Benchmark was run on a VirtualBox VM (Kali), 8Gb RAM, 2 CPU cores.
+Target environment is AWS-ported custom GOAD, reached through OpenVPN deployment.

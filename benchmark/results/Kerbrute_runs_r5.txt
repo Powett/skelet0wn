@@ -1,0 +1,105 @@
+[     MAIN     ] > ########## Database setup
+[     MAIN     ] > * Connecting to client
+[     MAIN     ] >   * Creating new database 20240725-040632... 
+[     MAIN     ] > ########## Building workflow
+[    UNINIT    ] >  * Building skelet0wn/kerbrute Limb
+[    UNINIT    ] >  * Building skelet0wn/kerbrute image... 
+[     MAIN     ] > * Setting names and creating output folders
+[     MAIN     ] > ########## Running workflow
+[      n0      ] >  * Running limb n0, Sequence
+[     n0.0     ] >   * Running limb n0.0, UploadFile
+[     n0.0     ] >   * OK, exiting
+[     n0.1     ] >   * Running limb n0.1, ShareFile
+[     n0.1     ] >   * OK, exiting
+[     n0.2     ] >   * Running limb n0.2, Kerbrute
+[     n0.2     ] >    * Fetching arguments
+[     n0.2     ] >    * Building command... 
+[     n0.2     ] >    * Running command... 
+[     n0.2     ] >    * Cleaning up... 
+[     n0.2     ] >    * Parsing results... 
+[     n0.2     ] >   * OK, exiting
+[      n0      ] >  * OK, exiting
+[     MAIN     ] > ########## Database setup
+[     MAIN     ] > * Connecting to client
+[     MAIN     ] >   * Creating new database 20240725-040634... 
+[     MAIN     ] > ########## Building workflow
+[    UNINIT    ] >  * Building skelet0wn/kerbrute Limb
+[    UNINIT    ] >  * Building skelet0wn/kerbrute image... 
+[     MAIN     ] > * Setting names and creating output folders
+[     MAIN     ] > ########## Running workflow
+[      n0      ] >  * Running limb n0, Sequence
+[     n0.0     ] >   * Running limb n0.0, UploadFile
+[     n0.0     ] >   * OK, exiting
+[     n0.1     ] >   * Running limb n0.1, ShareFile
+[     n0.1     ] >   * OK, exiting
+[     n0.2     ] >   * Running limb n0.2, Kerbrute
+[     n0.2     ] >    * Fetching arguments
+[     n0.2     ] >    * Building command... 
+[     n0.2     ] >    * Running command... 
+[     n0.2     ] >    * Cleaning up... 
+[     n0.2     ] >    * Parsing results... 
+[     n0.2     ] >   * OK, exiting
+[      n0      ] >  * OK, exiting
+[     MAIN     ] > ########## Database setup
+[     MAIN     ] > * Connecting to client
+[     MAIN     ] >   * Creating new database 20240725-040637... 
+[     MAIN     ] > ########## Building workflow
+[    UNINIT    ] >  * Building skelet0wn/kerbrute Limb
+[    UNINIT    ] >  * Building skelet0wn/kerbrute image... 
+[     MAIN     ] > * Setting names and creating output folders
+[     MAIN     ] > ########## Running workflow
+[      n0      ] >  * Running limb n0, Sequence
+[     n0.0     ] >   * Running limb n0.0, UploadFile
+[     n0.0     ] >   * OK, exiting
+[     n0.1     ] >   * Running limb n0.1, ShareFile
+[     n0.1     ] >   * OK, exiting
+[     n0.2     ] >   * Running limb n0.2, Kerbrute
+[     n0.2     ] >    * Fetching arguments
+[     n0.2     ] >    * Building command... 
+[     n0.2     ] >    * Running command... 
+[     n0.2     ] >    * Cleaning up... 
+[     n0.2     ] >    * Parsing results... 
+[     n0.2     ] >   * OK, exiting
+[      n0      ] >  * OK, exiting
+[     MAIN     ] > ########## Database setup
+[     MAIN     ] > * Connecting to client
+[     MAIN     ] >   * Creating new database 20240725-040640... 
+[     MAIN     ] > ########## Building workflow
+[    UNINIT    ] >  * Building skelet0wn/kerbrute Limb
+[    UNINIT    ] >  * Building skelet0wn/kerbrute image... 
+[     MAIN     ] > * Setting names and creating output folders
+[     MAIN     ] > ########## Running workflow
+[      n0      ] >  * Running limb n0, Sequence
+[     n0.0     ] >   * Running limb n0.0, UploadFile
+[     n0.0     ] >   * OK, exiting
+[     n0.1     ] >   * Running limb n0.1, ShareFile
+[     n0.1     ] >   * OK, exiting
+[     n0.2     ] >   * Running limb n0.2, Kerbrute
+[     n0.2     ] >    * Fetching arguments
+[     n0.2     ] >    * Building command... 
+[     n0.2     ] >    * Running command... 
+[     n0.2     ] >    * Cleaning up... 
+[     n0.2     ] >    * Parsing results... 
+[     n0.2     ] >   * OK, exiting
+[      n0      ] >  * OK, exiting
+[     MAIN     ] > ########## Database setup
+[     MAIN     ] > * Connecting to client
+[     MAIN     ] >   * Creating new database 20240725-040642... 
+[     MAIN     ] > ########## Building workflow
+[    UNINIT    ] >  * Building skelet0wn/kerbrute Limb
+[    UNINIT    ] >  * Building skelet0wn/kerbrute image... 
+[     MAIN     ] > * Setting names and creating output folders
+[     MAIN     ] > ########## Running workflow
+[      n0      ] >  * Running limb n0, Sequence
+[     n0.0     ] >   * Running limb n0.0, UploadFile
+[     n0.0     ] >   * OK, exiting
+[     n0.1     ] >   * Running limb n0.1, ShareFile
+[     n0.1     ] >   * OK, exiting
+[     n0.2     ] >   * Running limb n0.2, Kerbrute
+[     n0.2     ] >    * Fetching arguments
+[     n0.2     ] >    * Building command... 
+[     n0.2     ] >    * Running command... 
+[     n0.2     ] >    * Cleaning up... 
+[     n0.2     ] >    * Parsing results... 
+[     n0.2     ] >   * OK, exiting
+[      n0      ] >  * OK, exiting

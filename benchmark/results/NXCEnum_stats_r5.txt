@@ -1,0 +1,14 @@
+
+ Performance counter stats for 'python NXCEnum/sample.py' (5 runs):
+
+            597.54 msec task-clock                       #    0.010 CPUs utilized               ( +- 12.48% )
+               754      context-switches                 #    1.262 K/sec                       ( +-  2.50% )
+                34      cpu-migrations                   #   56.900 /sec                        ( +-  6.47% )
+             8,669      page-faults                      #   14.508 K/sec                       ( +-  0.02% )
+   <not supported>      cycles                                                                
+   <not supported>      instructions                                                          
+   <not supported>      branches                                                              
+   <not supported>      branch-misses                                                         
+
+            57.177 +- 0.562 seconds time elapsed  ( +-  0.98% )
+

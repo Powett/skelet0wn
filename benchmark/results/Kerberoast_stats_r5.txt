@@ -1,0 +1,14 @@
+
+ Performance counter stats for 'python Kerberoast/sample.py' (5 runs):
+
+            393.66 msec task-clock                       #    0.012 CPUs utilized               ( +-  2.07% )
+               380      context-switches                 #  965.294 /sec                        ( +-  1.52% )
+                20      cpu-migrations                   #   50.805 /sec                        ( +-  9.82% )
+             8,589      page-faults                      #   21.818 K/sec                       ( +-  0.04% )
+   <not supported>      cycles                                                                
+   <not supported>      instructions                                                          
+   <not supported>      branches                                                              
+   <not supported>      branch-misses                                                         
+
+            33.734 +- 0.598 seconds time elapsed  ( +-  1.77% )
+

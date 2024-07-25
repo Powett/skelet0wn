@@ -1,0 +1,14 @@
+
+ Performance counter stats for 'python Kerbrute/sample.py' (5 runs):
+
+            355.46 msec task-clock                       #    0.141 CPUs utilized               ( +-  1.53% )
+               174      context-switches                 #  489.507 /sec                        ( +-  2.79% )
+                 4      cpu-migrations                   #   11.253 /sec                        ( +- 15.00% )
+             8,596      page-faults                      #   24.183 K/sec                       ( +-  0.03% )
+   <not supported>      cycles                                                                
+   <not supported>      instructions                                                          
+   <not supported>      branches                                                              
+   <not supported>      branch-misses                                                         
+
+             2.526 +- 0.119 seconds time elapsed  ( +-  4.73% )
+
