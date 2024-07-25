@@ -26,7 +26,7 @@ Goals:
 Provided:
 - Domain Controller IP: `192.168.56.11`
 - login `north.sevenkingdoms.local\samwell.tarly:Hearstbane`
-- custom wordlist: `./2_kerberoast_wordlist.txt`
+- custom wordlist: `./needed_files/2_kerberoast_wordlist.txt`
 
 Goals:
 - Perform a Kerberoast attack using specified wordlist, domain and login, retrieve password(s).
@@ -43,7 +43,7 @@ Goals:
 Provided:
 - Domain Controller IP: `192.168.56.11`
 - domain: `north.sevenkingdoms.local`
-- custom userlist: `./4_kerbrute_userlist.txt`
+- custom userlist: `./needed_files/4_kerbrute_userlist.txt`
 
 Goals:
 - Enumerate valid users (without password spraying) on DC, using provided custom userlist.
