@@ -18,6 +18,7 @@ The content of this repository is as follows:
 ```bash
 .
 ├── docs/                                   # Sphinx documentation folder
+├── benchmark/                              # Benchmark details (comparing skelet0wn and human pentesters)
 ├── LICENSE                                 # License file (MIT)
 ├── MANIFEST.in                             # pip package configuration file
 ├── misc/                                   # Helper scripts
