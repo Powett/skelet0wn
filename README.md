@@ -66,11 +66,16 @@ The content of this repository is as follows:
 - A MongoDB instance running (see [Setting up MongoDB](#setting-up-mongodb) for quickstart script)
 
 ### Installation - from remote
+*This is recommended for quickstart install,if you do not need helper scripts.*
+
 1. Install the package using pip (virtual environment recommended)
 ```bash
 python3 -m pip install git+https://github.com/Powett/skelet0wn.git
 ```
+
 ### Installation - from source
+*This is recommended if you plan on modifying the framework, and/or using the various helper scripts, as they are not packed in the pip package itself.*
+
 1. Clone the repository:
     ```bash
     git clone https://github.com/Powett/skelet0wn.git
@@ -81,21 +86,37 @@ python3 -m pip install git+https://github.com/Powett/skelet0wn.git
     python3 -m pip install .
     ```
 ### Setting up MongoDB
-An existing running MongoDB server can be used.  
+An already existing running MongoDB server can be used.  
 
-Else, a starter script launching a Docker instance can be found [here](./misc/mongodb_quickstart.sh).
+Else, a quickstart script launching a Docker instance can be found [here](./misc/mongodb_quickstart.sh).
 
 ```bash
 bash ./misc/mongodb_quickstart.sh
 ```
 
 **[WARNING]** Please be aware that this script will start an unofficial MongoDB Docker image (in case of missing AVX CPU support, [nertworkweb/mongodb-no-avx](https://hub.docker.com/r/nertworkweb/mongodb-no-avx)).  
-**[WARNING]** Please be aware that the created MongoDB instance is not persisted upon container stop. Data will be lost.
+**[WARNING]** Please be aware that the created MongoDB instance does not persist data on the host. Data might be lost, should you remove the container.
 
 ### [OPTIONAL] Prebuild Bone(s)
 As of now, the equivalent of `docker build` call in Python SDK does not stream logs, but waits for completion due to the underlying implementation of this SDK. This does not impact the building process, but it prevents you from having a status on the build process, which can be lengthy.
 
-If you want to explicitly build a single Bone in terminal (hence having detailed logs of the build process), this [script](./misc/build_bone.sh) is provided. To use it, run the following:
+If you want to explicitly build a single Bone in terminal (hence having detailed logs of the build process), manual build scripts are provided. To use them, run the following:
+
+#### If built from source (git clone)
+1. Go to cloned repo
+2. Build all `Bone`s:
+```bash
+./misc/build_all_bones.sh ./skelet0wn/limbs/bones/
+```
+
+OR
+
+2. Build specific `Bone`:
+```bash
+./misc/build_bone.sh ./skelet0wn/limbs/bones/$BONE
+```
+
+#### If built from remote (pip install git+)
 
 1. Find package location and move to it
 ```bash
@@ -103,7 +124,7 @@ loc=$(python -c "import skelet0wn.utilities;print(skelet0wn.utilities.get_packag
 cd $loc
 ```
 
-2. (if the package was built from remote, and not from source)
+2. Get build scripts
 ```bash
 mkdir misc
 curl https://raw.githubusercontent.com/Powett/skelet0wn/master/misc/build_all_bones.sh -o ./misc/build_all_bones.sh
@@ -111,7 +132,7 @@ curl https://raw.githubusercontent.com/Powett/skelet0wn/master/misc/build_bone.s
 chmod +x ./misc/build_*.sh
 ```
 
-3. Build specific `Bone` (`$BONE_FOLDER` is usually similar to `./limbs/bones/generic_bone_template` or `./skelet0wn/limbs/bones/generic_bone_template`). The name will be deduced by last-level directory name.
+1. Build specific `Bone`
 ```bash
 ./misc/build_bone.sh $BONE_FOLDER
 ```
