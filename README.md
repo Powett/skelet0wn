@@ -97,10 +97,11 @@ bash ./misc/mongodb_quickstart.sh
 **[WARNING]** Please be aware that this script will start an unofficial MongoDB Docker image (in case of missing AVX CPU support, [nertworkweb/mongodb-no-avx](https://hub.docker.com/r/nertworkweb/mongodb-no-avx)).  
 **[WARNING]** Please be aware that the created MongoDB instance does not persist data on the host. Data might be lost, should you remove the container.
 
-### [OPTIONAL] Prebuild Bone(s)
-As of now, the equivalent of `docker build` call in Python SDK does not stream logs, but waits for completion due to the underlying implementation of this SDK. This does not impact the building process, but it prevents you from having a status on the build process, which can be lengthy.
+### Visualizing data
+It is recommended to use a MongoDB visualizer such as [Compass](https://www.mongodb.com/products/tools/compass).
 
-If you want to explicitly build a single Bone in terminal (hence having detailed logs of the build process), manual build scripts are provided. To use them, run the following:
+### [OPTIONAL] Prebuild Bone(s)
+As of now, the equivalent of `docker build` call in Python SDK does not stream logs, but waits for completion due to the underlying implementation of this SDK. This does not impact the building process, but it prevents the *skelet0wn* framework from streaming build process logs and status. As this process might be lengthy and prone to error, it is recommended to pre-build the Docker images according to the following steps.
 
 #### If built from source (git clone)
 1. Go to cloned repo
