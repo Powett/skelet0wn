@@ -14,7 +14,7 @@ Please use the specified tools and options when relevant.
 Ensure beforehand that your GOAD and VPN configuration are up and running (e.g. `nxc/cme smb 192.168.56.1/27`, should return GOT-related machines up)
 ## 1. Nmap - NXCEnum
 Provided:
-- login (username:password): `samwell.tarly:Hearstbane`
+- login (username:password): `samwell.tarly:Heartsbane`
 - targeted subnet: `192.168.56.1/27`
 
 Goals:
@@ -25,7 +25,7 @@ Goals:
 ## 2. Kerberoast
 Provided:
 - Domain Controller IP: `192.168.56.11`
-- login `north.sevenkingdoms.local\samwell.tarly:Hearstbane`
+- login `north.sevenkingdoms.local/samwell.tarly:Heartsbane`
 - custom wordlist: `./needed_files/2_kerberoast_wordlist.txt`
 
 Goals:
@@ -34,7 +34,7 @@ Goals:
 ## 3. ASREProast
 Provided:
 - Domain Controller IP: `192.168.56.11`
-- login `north.sevenkingdoms.local\samwell.tarly:Hearstbane`
+- login `north.sevenkingdoms.local/samwell.tarly:Heartsbane`
 
 Goals:
 - Perform an ASREPRoast attack using rockyou.txt wordlist (find it on your machine/download it, but remember it is part of the process!), domain and login, retrieve password(s).
