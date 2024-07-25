@@ -345,6 +345,7 @@ class Bone(Limb):
         fetch_arguments_success = self.fetch_arguments(mongo_database, run_id)
 
         if not fetch_arguments_success:
+            self.log("Could not fetch arguments.")
             self.store_metadata(mongo_database, run_id)
             raise BoneStateError(
                 name=self.name,
@@ -372,9 +373,9 @@ class Bone(Limb):
         try:
             self.run_command()
         except Exception as exc:
+            self.log(f"Run error {exc}", level="ERROR")
             self.store_metadata(mongo_database, run_id)  # Store limb metadata anyway
             # raise LimbError(limb=self.name,class_name=self.__class__.__name__, msg=f"Could not run command: {exc}")
-            self.log(f"Run error {exc}", level="ERROR")
 
         # Clean up
         self.log(f"Cleaning up... ", depth_increment=1)
@@ -424,12 +425,15 @@ class Bone(Limb):
         outputID: Optional[ObjectId] = None,
         other_fields: dict = dict(),
     ) -> None:
-        other_fields["docker"] = {
-            "buildLog": ("\n".join([str(k) for k in self.docker_build_logs]),),
-            "runLog": str(self.docker_run_logs),
-            "runStatus": str(self.docker_run_status),
-        }
-        other_fields["command"] = self.built_command
+        try:
+            other_fields["docker"] = {
+                "buildLog": ("\n".join([str(k) for k in self.docker_build_logs]),),
+                "runLog": str(self.docker_run_logs),
+                "runStatus": str(self.docker_run_status),
+            }
+            other_fields["command"] = self.built_command
+        except Exception as exc:
+            self.log(f"Error while storing metadata: {exc}", level="ERROR")
         super().store_metadata(
             mongo_database, run_id, outputCollection, outputID, other_fields
         )
