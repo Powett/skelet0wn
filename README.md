@@ -95,15 +95,32 @@ bash ./misc/mongodb_quickstart.sh
 ### [OPTIONAL] Prebuild Bone(s)
 As of now, the equivalent of `docker build` call in Python SDK does not stream logs, but waits for completion due to the underlying implementation of this SDK. This does not impact the building process, but it prevents you from having a status on the build process, which can be lengthy.
 
-If you want to explicitly build a single Bone in terminal (hence having detailed logs of the build process), this [script](./misc/build_bone.sh) is provided. To use it, run from the root repository folder:
+If you want to explicitly build a single Bone in terminal (hence having detailed logs of the build process), this [script](./misc/build_bone.sh) is provided. To use it, run the following:
 
+1. Find package location and move to it
 ```bash
-./misc/build_bone.sh [bone_name]
+loc=$(python -c "import skelet0wn.utilities;print(skelet0wn.utilities.get_package_relative_path(''))")
+cd $loc
 ```
 
-To build all bones available in the `./skelet0wn/limbs/bones/` folder in a similar manner, use the following command (from root repository folder):
+2. (if the package was built from remote, and not from source)
 ```bash
-./misc/build_all_bones.sh
+mkdir misc
+curl https://raw.githubusercontent.com/Powett/skelet0wn/master/misc/build_all_bones.sh -o ./misc/build_all_bones.sh
+curl https://raw.githubusercontent.com/Powett/skelet0wn/master/misc/build_bone.sh -o ./misc/build_bone.sh
+chmod +x ./misc/build_*.sh
+```
+
+3. Build specific `Bone` (`$BONE_FOLDER` is usually similar to `./limbs/bones/generic_bone_template` or `./skelet0wn/limbs/bones/generic_bone_template`). The name will be deduced by last-level directory name.
+```bash
+./misc/build_bone.sh $BONE_FOLDER
+```
+
+OR
+
+1. Build all `Bone`s in a folder (`$BONES_FOLDER` is usually similar to `./limbs/bones/` or `./skelet0wn/limbs/bones/`).
+```bash
+./misc/build_all_bones.sh $BONES_FOLDER
 ```
 
 ## Usage
