@@ -65,7 +65,7 @@ The content of this repository is as follows:
 - Docker installed (preferably in [rootless](https://docs.docker.com/engine/security/rootless/) mode, otherwise using the *skelet0wn* framework will require sudo privileges)
 - A MongoDB instance running (see [Setting up MongoDB](#setting-up-mongodb) for quickstart script)
 
-### Installation - pip
+### Installation - from remote
 1. Install the package using pip (virtual environment recommended)
 ```bash
 python3 -m pip install git+https://github.com/Powett/skelet0wn.git
