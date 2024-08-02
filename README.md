@@ -342,6 +342,9 @@ docker stop $IDS
 docker rm $IDs
 ```
 
+### Windows compability
+All base `skelet0wn` commands are compatible with Windows-based deployment (as long as dependencies requirements are met). The [./misc](./misc) scripts however are Bash syntax, but mainly consist of Docker calls: these subcommands can be run on Windows systems.
+
 ## TODO
 - [x] Write detailed documentation
 - [ ] Integrate more `Bone`s and `Joint`s
