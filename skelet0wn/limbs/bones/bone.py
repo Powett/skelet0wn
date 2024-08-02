@@ -304,7 +304,7 @@ class Bone(Limb):
                 f"{self.shared_dir}:/mnt/shared",
             ],
             auto_remove=False,
-            name=self.name,
+            name=f"skelet0wn_{self.name}",
             environment={"PYTHONUNBUFFERED": "1"},
             detach=True,
         )

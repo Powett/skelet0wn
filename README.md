@@ -247,6 +247,10 @@ When running from source, you can set the following environment variables:
 - `LOGURU_LEVEL`: Logging level, either `"TRACE"`, `"DEBUG"`, `"INFO"` (default), `"WARNING"` or `"ERROR"`.
 - `DATABASE_NAME`: MongoDB database to use. If unspecified, a new `$DATE-$TIME` database will automatically be created.
 
+The *outputs* and *shared* folders, as set in the call to `prepare_environment()` will be generated if non-existing at runtime. These folders are used internally, and should not be tampered with during runtime. They can be used after execution for debugging purposes.
+
+Please be aware that should subsequent workflows be executed on the same folders, their content will be overwritten.
+
 Please refer to the [documentation](https://skelet0wn.rtfd.io) for further explanations.
 
 ## Integrating/Modifying a `Limb`
@@ -316,6 +320,27 @@ The constructor should not need to be modified, except for the paths to the prev
 - They default to None if no significant element is to be reused by direct reference of other `Limb`s
 - In the case you need to keep track of several elements IDs and collections created by a `Bone` $b_0$, you can create a composite element (e.g. stored in the "tmp" Collection) containing several pairs (elementID, collection). In order to dereference the sub-objects, use `Transformer`s to dereference each sub-object [WIP].
 
+## Troubleshooting
+### Building Bones
+If you encounter errors, hang-ups or similar when using one or several `Bone`s for the first time, please refer to [pre-build bones](#optional-prebuild-bones) for explicit `docker build` debug messages.
+
+### Interrupting workflows
+If a workflow is interrupted or ends unexpectedly, dangling docker containers might still be up or in an error state. Re-running workflows in this state might lead in Docker errors (e.g. name conflict errors).
+To clean up, use the following commands:
+
+1. List all containers created by `skelet0wn`
+```bash
+docker container ps -a
+IDS=$(docker container ls -a -q --filter name=skelet0wn_)
+```
+2. Stop those containers
+```bash
+docker stop $IDS
+```
+3. Remove them
+```bash
+docker rm $IDs
+```
 
 ## TODO
 - [x] Write detailed documentation
