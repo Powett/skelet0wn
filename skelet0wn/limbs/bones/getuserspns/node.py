@@ -24,12 +24,12 @@ class GetUserSPNs(Bone):
         )
 
     # Implement here the tool-specific parsing and database feeding
-    def store_results(self, mongo_database: Database, run_id: str) -> None:
+    def store_results(self, skull: Database, run_id: str) -> None:
         # parse raw
         with open(f"{self.output_dir}/userspns_output.txt", "rb") as f:
             outputRaw = Binary(f.read())
 
-        insert_result: InsertOneResult = mongo_database["files"].insert_one(
+        insert_result: InsertOneResult = skull["files"].insert_one(
             {
                 "filename": "tgs.txt",
                 "content": outputRaw,
@@ -41,4 +41,4 @@ class GetUserSPNs(Bone):
         childID = insert_result.inserted_id
 
         # store step metadata
-        super().store_metadata(mongo_database, run_id, "files", childID)
+        super().store_metadata(skull, run_id, "files", childID)

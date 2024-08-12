@@ -28,7 +28,7 @@ class Hashcat(Bone):
         )
 
     # Implement here the tool-specific parsing and database feeding
-    def store_results(self, mongo_database: Database, run_id: str) -> None:
+    def store_results(self, skull: Database, run_id: str) -> None:
         # parse raw
         with open(f"{self.output_dir}/hashcat_output.txt", "rb") as f:
             outputRaw = Binary(f.read())
@@ -52,7 +52,7 @@ class Hashcat(Bone):
                     match.group(2).lower(),
                     match.group(3),
                 )
-                mongo_database["users"].update_one(
+                skull["users"].update_one(
                     {"username": username, "domain": domain},
                     {
                         "$set": {
@@ -67,7 +67,7 @@ class Hashcat(Bone):
                     f"Found password: {domain}/{username}:{password}", level="DEBUG"
                 )
 
-        insert_result: Optional[InsertOneResult] = mongo_database["files"].insert_one(
+        insert_result: Optional[InsertOneResult] = skull["files"].insert_one(
             {
                 "filename": "cracked_file.txt",
                 "content": outputRaw,
@@ -79,4 +79,4 @@ class Hashcat(Bone):
         childID = insert_result.inserted_id
 
         # store step metadata
-        super().store_metadata(mongo_database, run_id, "files", childID)
+        super().store_metadata(skull, run_id, "files", childID)

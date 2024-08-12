@@ -1,5 +1,5 @@
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040645... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/nmap Limb
@@ -37,7 +37,7 @@
 [     n0.3     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040744... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/nmap Limb
@@ -75,7 +75,7 @@
 [     n0.3     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040841... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/nmap Limb
@@ -113,7 +113,7 @@
 [     n0.3     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040936... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/nmap Limb
@@ -151,7 +151,7 @@
 [     n0.3     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-041035... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/nmap Limb

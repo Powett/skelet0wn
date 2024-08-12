@@ -28,8 +28,8 @@ class NxcSmb(Bone):
             mapping_file=mapping_file,
         )
 
-    def store_results(self, mongo_database: Database, run_id: str) -> None:
-        db_machines = mongo_database["machines"]
+    def store_results(self, skull: Database, run_id: str) -> None:
+        db_machines = skull["machines"]
         conn = sqlite3.connect(f"{self.output_dir}/default/smb.db")
         cursor = conn.cursor()
 
@@ -119,14 +119,14 @@ class NxcSmb(Bone):
                         # try to fetch domain
                         filter_crit = {"hostnames": hostname}
                         projection = {"domain": 1}
-                        domain_result: Optional[Collection] = mongo_database[
+                        domain_result: Optional[Collection] = skull[
                             "machines"
                         ].find_one(filter=filter_crit, projection=projection)
                         if domain_result is not None:
                             domain = domain_result["domain"]
                             update["$set"]["domain"] = domain.lower()
 
-                        result = mongo_database["users"].update_one(
+                        result = skull["users"].update_one(
                             query, update, upsert=True
                         )
                         if result.upserted_id:
@@ -171,7 +171,7 @@ class NxcSmb(Bone):
                                 "hostnames": hostname,
                             },
                         }
-                        result = mongo_database["machines"].update_one(
+                        result = skull["machines"].update_one(
                             query, update, upsert=True
                         )
                         if result.upserted_id:
@@ -185,4 +185,4 @@ class NxcSmb(Bone):
                         found_shares = False
 
         # store step metadata
-        super().store_metadata(mongo_database, run_id)
+        super().store_metadata(skull, run_id)

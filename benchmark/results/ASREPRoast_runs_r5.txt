@@ -1,5 +1,5 @@
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040050... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/getnpusers Limb
@@ -27,7 +27,7 @@
 [     n0.2     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040128... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/getnpusers Limb
@@ -55,7 +55,7 @@
 [     n0.2     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040202... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/getnpusers Limb
@@ -83,7 +83,7 @@
 [     n0.2     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040238... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/getnpusers Limb
@@ -111,7 +111,7 @@
 [     n0.2     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040311... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/getnpusers Limb

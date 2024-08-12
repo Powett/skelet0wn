@@ -1,5 +1,5 @@
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040343... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/getuserspns Limb
@@ -31,7 +31,7 @@
 [     n0.4     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040419... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/getuserspns Limb
@@ -63,7 +63,7 @@
 [     n0.4     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040452... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/getuserspns Limb
@@ -95,7 +95,7 @@
 [     n0.4     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040525... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/getuserspns Limb
@@ -127,7 +127,7 @@
 [     n0.4     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040559... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/getuserspns Limb

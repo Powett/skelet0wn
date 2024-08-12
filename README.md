@@ -209,16 +209,16 @@ Example (from the provided [minimal workflow example](./samples/Minimal/sample.p
 from limbs.bones import Nmap
 from limbs.joints import Sequence
 ```
-2) Connect to MongoDB database (should be running already) and set unique run ID
+2) Connect to `skull_client` MongoDB client (should be running already) and set unique run ID as database name
 ```python
-client: MongoClient = MongoClient("mongodb://localhost:27017/")
+skull_client: MongoClient = MongoClient("mongodb://localhost:27017/")
 
 # Set unique run_id
 run_id = time.strftime("%Y%m%d-%H%M%S")
 
-# create a new database on the client, or use an existing one
+# create a new database on the skull_client, or use an existing one
 database_name = time.strftime("%Y%m%d-%H%M%S")
-mongo_database = client[database_name]
+skull = skull_client[database_name]
 ```
 3) Create your workflow: use `Joint`s to perform control-flow and logic operations, and `Bone`s to run tools. Provide `Bone`s with static configuration files (see TBD) and `Joint`s with specific configuration files/parameters.
 ```python
@@ -239,13 +239,13 @@ workflow.prepare_environment(
 5) Run workflow: As all *skelet0wn* classes herit from the same `Limb` class, running a worfklow is simply done by calling `run(mongo_db, run_id)` on the top-level `Limb`.
 ```python
 # Run workflow
-workflow.run(mongo_database, run_id)
+workflow.run(skull, run_id)
 ```
 
 ### Running the workflow
 When running from source, you can set the following environment variables:
 - `LOGURU_LEVEL`: Logging level, either `"TRACE"`, `"DEBUG"`, `"INFO"` (default), `"WARNING"` or `"ERROR"`.
-- `DATABASE_NAME`: MongoDB database to use. If unspecified, a new `$DATE-$TIME` database will automatically be created.
+- `DATABASE_NAME`: MongoDB database to use. If unspecified, a new `$DATE-$TIME` database will automatically be created in the `skull_client`.
 
 The *outputs* and *shared* folders, as set in the call to `prepare_environment()` will be generated if non-existing at runtime. These folders are used internally, and should not be tampered with during runtime. They can be used after execution for debugging purposes.
 

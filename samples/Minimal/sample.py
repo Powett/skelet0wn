@@ -7,7 +7,7 @@ from skelet0wn.limbs.bones import Nmap
 from skelet0wn.limbs.joints import Sequence
 
 # Connect to MongoDB
-client: MongoClient = MongoClient("mongodb://localhost:27017/")
+skull_client: MongoClient = MongoClient("mongodb://localhost:27017/")
 
 # Set unique runID
 run_id = time.strftime("%Y%m%d-%H%M%S")
@@ -16,9 +16,9 @@ run_id = time.strftime("%Y%m%d-%H%M%S")
 database_name = os.getenv("DATABASE_NAME")
 if database_name is None:
     database_name = time.strftime("%Y%m%d-%H%M%S")
-mongo_database = client[database_name]
+skull = skull_client[database_name]
 
-mongo_database = client[database_name]
+skull = skull_client[database_name]
 # Create workflow (two Nmap nodes with static parameters only)
 workflow = Sequence(
     children=[
@@ -33,4 +33,4 @@ workflow.prepare_environment(
 )
 
 # Run workflow
-workflow.run(mongo_database, run_id)
+workflow.run(skull, run_id)

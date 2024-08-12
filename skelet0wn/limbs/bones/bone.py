@@ -72,8 +72,8 @@ class Bone(Limb):
         # Build docker image
         self.log(f"Building {docker_image_tag} image... ")
         try:
-            docker_client = docker.from_env()
-            self.docker_image, self.docker_build_logs = docker_client.images.build(
+            docker_skull_client = docker.from_env()
+            self.docker_image, self.docker_build_logs = docker_skull_client.images.build(
                 path=self.docker_dockerfile_directory, tag=self.docker_image_tag
             )
             for log in self.docker_build_logs:
@@ -81,11 +81,11 @@ class Bone(Limb):
         except Exception as exc:
             raise DockerBuildError(f"{exc}")
 
-    def fetch_arguments(self, mongo_database: Database, run_id: str) -> bool:
+    def fetch_arguments(self, skull: Database, run_id: str) -> bool:
         """Returns the :py:class:`Limb` arguments availability. If False, calling run() is certain to fail.
 
         Args:
-            mongo_database (:py:class:`pymongo.database.Database`\): MongoDB database to fetch the arguments from.
+            skull (:py:class:`pymongo.database.Database`\): MongoDB database to fetch the arguments from.
             run_id (str): Unique identifier of this specific run. Necessary to reuse the same database in several runs.
         Raises:
             :py:class:`BoneStateError`\: If the :py:class:`Bone` is not in the correct state to perform the task.
@@ -199,7 +199,7 @@ class Bone(Limb):
                             "outputID": {"$ne": None},
                         }
                         projection = {"outputCollection": 1, "outputID": 1, "_id": 0}
-                        result: Optional[Collection] = mongo_database["steps"].find_one(
+                        result: Optional[Collection] = skull["steps"].find_one(
                             query, projection
                         )
                         if result is None:
@@ -228,7 +228,7 @@ class Bone(Limb):
                         depth_increment=4,
                         level="DEBUG",
                     )
-                    collection = mongo_database[provider_collection]
+                    collection = skull[provider_collection]
                     field_result: Optional[Collection] = collection.find_one(
                         provider_filter_crit, provider_projection
                     )
@@ -295,8 +295,8 @@ class Bone(Limb):
                 state="",
                 task="RUN_COMMAND",
             )
-        docker_client = docker.from_env()
-        self.docker_container = docker_client.containers.run(
+        docker_skull_client = docker.from_env()
+        self.docker_container = docker_skull_client.containers.run(
             image=self.docker_image,
             command=self.built_command,
             volumes=[
@@ -321,32 +321,32 @@ class Bone(Limb):
             raise DockerRunError(f"{self.docker_run_status}")
 
     @abstractmethod
-    def store_results(self, mongo_database: Database, run_id: str) -> None:
+    def store_results(self, skull: Database, run_id: str) -> None:
         """Mandatory method for a:py:class:`Bone` class, parsing the logs and/or output files and feeding them to the database.
 
         Args:
-            mongo_database (:py:class:`pymongo.database.Database`\): MongoDB database to store the results in.
+            skull (:py:class:`pymongo.database.Database`\): MongoDB database to store the results in.
             run_id (str): Unique identifier of this specific run. Necessary to reuse the same database in several runs.
         Raises:
             ValueError
         """
         pass
 
-    def run(self, mongo_database: Database, run_id: str) -> None:
+    def run(self, skull: Database, run_id: str) -> None:
         """Base method for a Limb.
 
         Args:
-            mongo_database (:py:class:`pymongo.database.Database`\): MongoDB database to fetch the arguments from and store the results in.
+            skull (:py:class:`pymongo.database.Database`\): MongoDB database to fetch the arguments from and store the results in.
             run_id (str): Unique identifier of this specific run. Necessary to reuse the same database in several runs.
         """
         self.log(f"Running limb {self.name}, {self.__class__.__name__}")
 
         # Fetch arguments
-        fetch_arguments_success = self.fetch_arguments(mongo_database, run_id)
+        fetch_arguments_success = self.fetch_arguments(skull, run_id)
 
         if not fetch_arguments_success:
             self.log("Could not fetch arguments.")
-            self.store_metadata(mongo_database, run_id)
+            self.store_metadata(skull, run_id)
             raise BoneStateError(
                 name=self.name,
                 class_name=self.__class__.__name__,
@@ -360,7 +360,7 @@ class Bone(Limb):
             self.build_command()
         except Exception as exc:
             self.log("Failed", level="ERROR")
-            self.store_metadata(mongo_database, run_id)  # Store limb metadata anyway
+            self.store_metadata(skull, run_id)  # Store limb metadata anyway
             raise LimbError(
                 limb=self.name,
                 class_name=self.__class__.__name__,
@@ -374,7 +374,7 @@ class Bone(Limb):
             self.run_command()
         except Exception as exc:
             self.log(f"Run error {exc}", level="ERROR")
-            self.store_metadata(mongo_database, run_id)  # Store limb metadata anyway
+            self.store_metadata(skull, run_id)  # Store limb metadata anyway
             # raise LimbError(limb=self.name,class_name=self.__class__.__name__, msg=f"Could not run command: {exc}")
 
         # Clean up
@@ -387,10 +387,10 @@ class Bone(Limb):
         # Feed DB
         self.log(f"Parsing results... ", depth_increment=1)
         try:
-            self.store_results(mongo_database, run_id)
+            self.store_results(skull, run_id)
         except Exception as exc:
             self.log("Failed", level="WARNING")
-            self.store_metadata(mongo_database, run_id)  # Store limb metadata anyway
+            self.store_metadata(skull, run_id)  # Store limb metadata anyway
             raise LimbError(
                 limb=self.name,
                 class_name=self.__class__.__name__,
@@ -419,7 +419,7 @@ class Bone(Limb):
 
     def store_metadata(
         self,
-        mongo_database: Database,
+        skull: Database,
         run_id: str,
         outputCollection: Optional[str] = None,
         outputID: Optional[ObjectId] = None,
@@ -435,5 +435,5 @@ class Bone(Limb):
         except Exception as exc:
             self.log(f"Error while storing metadata: {exc}", level="ERROR")
         super().store_metadata(
-            mongo_database, run_id, outputCollection, outputID, other_fields
+            skull, run_id, outputCollection, outputID, other_fields
         )

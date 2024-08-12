@@ -33,7 +33,7 @@ class Sequence(Joint):
         self.stop_on_success = stop_on_success
         self.stop_on_failure = stop_on_failure
 
-    def run(self, mongo_database: Database, run_id: str) -> None:
+    def run(self, skull: Database, run_id: str) -> None:
         self.log(f"Running limb {self.name}, {self.__class__.__name__}")
         self.log(
             f"Stop on failure: {self.stop_on_failure}, Stop on success: {self.stop_on_success}",
@@ -42,7 +42,7 @@ class Sequence(Joint):
         for child in self.children:
             try:
                 self.log(f"Trying {child.name}...", depth_increment=1, level="DEBUG")
-                child.run(mongo_database, run_id)
+                child.run(skull, run_id)
             except Exception as exc:
                 if self.stop_on_failure:
                     raise Exception(
@@ -55,7 +55,7 @@ class Sequence(Joint):
                 if self.stop_on_success:
                     return
         self.log("Reached last child", level="DEBUG")
-        self.store_metadata(mongo_database, run_id)
+        self.store_metadata(skull, run_id)
         self.log("OK, exiting", level="SUCCESS")
 
     def interrupt(self) -> None:

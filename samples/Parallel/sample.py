@@ -15,8 +15,8 @@ logger.level("INFO")
 logger.info("########## Database setup")
 
 # Connect to MongoDB
-logger.info("* Connecting to client")
-client: MongoClient = MongoClient("mongodb://localhost:27017/")
+logger.info("* Connecting to skull_client")
+skull_client: MongoClient = MongoClient("mongodb://localhost:27017/")
 
 # Set unique runID
 run_id = time.strftime("%Y%m%d-%H%M%S")
@@ -28,11 +28,11 @@ if database_name is None:
     logger.info(f"  * Creating new database {database_name}... ")
 else:
     logger.info(f"  * Using existing database {database_name}... ")
-mongo_database = client[database_name]
+skull = skull_client[database_name]
 
 # Add an initial object
 logger.debug("  * Inserting first object... ")
-insert_result: Optional[InsertOneResult] = mongo_database["subnets"].insert_one(
+insert_result: Optional[InsertOneResult] = skull["subnets"].insert_one(
     {"cidr": "192.168.56.1/27"}
 )
 if insert_result is None or insert_result.acknowledged is False:
@@ -57,6 +57,6 @@ workflow.prepare_environment(
 logger.info("########## Running workflow")
 
 try:
-    workflow.run(mongo_database, run_id)
+    workflow.run(skull, run_id)
 except Exception as exc:
     logger.info(f"Exception {exc}")

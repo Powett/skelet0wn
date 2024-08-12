@@ -1,5 +1,5 @@
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040632... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/kerbrute Limb
@@ -20,7 +20,7 @@
 [     n0.2     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040634... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/kerbrute Limb
@@ -41,7 +41,7 @@
 [     n0.2     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040637... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/kerbrute Limb
@@ -62,7 +62,7 @@
 [     n0.2     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040640... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/kerbrute Limb
@@ -83,7 +83,7 @@
 [     n0.2     ] >   * OK, exiting
 [      n0      ] >  * OK, exiting
 [     MAIN     ] > ########## Database setup
-[     MAIN     ] > * Connecting to client
+[     MAIN     ] > * Connecting to skull_client
 [     MAIN     ] >   * Creating new database 20240725-040642... 
 [     MAIN     ] > ########## Building workflow
 [    UNINIT    ] >  * Building skelet0wn/kerbrute Limb

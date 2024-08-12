@@ -30,7 +30,7 @@ class UploadFile(Joint):
         self.file_path = file_path
         self.file_name = file_name
 
-    def run(self, mongo_database: Database, run_id: str) -> None:
+    def run(self, skull: Database, run_id: str) -> None:
         self.log(f"Running limb {self.name}, {self.__class__.__name__}")
         try:
             assert isfile(self.file_path)
@@ -38,7 +38,7 @@ class UploadFile(Joint):
                 data = Binary(f.read())
         except Exception as exc:
             raise Exception("Could not read file {self.file_path}: {exc}")
-        insert_result: InsertOneResult = mongo_database["files"].insert_one(
+        insert_result: InsertOneResult = skull["files"].insert_one(
             {
                 "filename": self.file_name,
              "content": data,
@@ -47,7 +47,7 @@ class UploadFile(Joint):
         )
         if insert_result is None:
             raise Exception('Could not download file "{self.file_path}" to database')
-        self.store_metadata(mongo_database, run_id, "files", insert_result.inserted_id)
+        self.store_metadata(skull, run_id, "files", insert_result.inserted_id)
         self.log("OK, exiting", level="SUCCESS")
 
 
@@ -63,9 +63,9 @@ class ShareFile(Joint):
         super().__init__()
         self.file_name = file_name
 
-    def run(self, mongo_database: Database, run_id: str) -> None:
+    def run(self, skull: Database, run_id: str) -> None:
         self.log(f"Running limb {self.name}, {self.__class__.__name__}")
-        result: Optional[Collection] = mongo_database["files"].find_one(
+        result: Optional[Collection] = skull["files"].find_one(
             {"filename": self.file_name}
         )
         try:
@@ -75,13 +75,13 @@ class ShareFile(Joint):
         except Exception as exc:
             raise Exception(f'Could not download file "{self.file_name}": {exc}')
         filepath = f"/mnt/shared/{self.file_name}"
-        insert_result: InsertOneResult = mongo_database["temp"].insert_one(
+        insert_result: InsertOneResult = skull["temp"].insert_one(
             {"result": {"filepath": filepath}}
         )
         if insert_result is None or insert_result.acknowledged is False:
             raise Exception("Could not insert element in temp")
         self.store_metadata(
-            mongo_database,
+            skull,
             run_id,
             outputCollection="temp",
             outputID=insert_result.inserted_id,

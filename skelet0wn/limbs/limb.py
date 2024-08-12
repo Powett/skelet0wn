@@ -25,11 +25,11 @@ class Limb(ABC):
         self.logger = logger.bind(name="UNINIT".center(14), depth_pad="")
 
     @abstractmethod
-    def run(self, mongo_database: Database, run_id: str) -> None:
+    def run(self, skull: Database, run_id: str) -> None:
         """Base method for a Limb.
 
         Args:
-            mongo_database (:py:class:`pymongo.database.Database`\): MongoDB database to fetch the arguments from and store the results in.
+            skull (:py:class:`pymongo.database.Database`\): MongoDB database to fetch the arguments from and store the results in.
             run_id (str): Unique identifier of this specific run. Necessary to reuse the same database in several runs.
         """
         pass
@@ -70,7 +70,7 @@ class Limb(ABC):
 
     def store_metadata(
         self,
-        mongo_database: Database,
+        skull: Database,
         run_id: str,
         outputCollection: Optional[str] = None,
         outputID: Optional[ObjectId] = None,
@@ -79,13 +79,13 @@ class Limb(ABC):
         """Helper to store common:py:class:`Limb` metadata in MongoDB database.
 
         Args:
-            mongo_database (:py:class:`pymongo.database.Database`\): MongoDB database to store the data in.
+            skull (:py:class:`pymongo.database.Database`\): MongoDB database to store the data in.
             run_id (str): Unique identifier of this specific run. Necessary to reuse the same database in several runs.
             outputCollection (str | None, optional): Name of the collection where the :py:class:`Limb` stored its output, when relevant. Defaults to None.
             outputID (:py:class:`bson.objectid.ObjectId` | None, optional): ObjectId at which the :py:class:`Limb` stored its output, when relevant. Defaults to None.
             other_fields (dict, optional): Additional fields to store in the MongoDB Document. Defaults to dict().
         """
-        steps_db = mongo_database["steps"]
+        steps_db = skull["steps"]
         fields = {
             "name": self.name,
             "class": self.__class__.__name__,
