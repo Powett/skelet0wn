@@ -37,16 +37,16 @@ class UploadFile(Joint):
             with open(self.file_path, "rb") as f:
                 data = Binary(f.read())
         except Exception as exc:
-            raise Exception("Could not read file {self.file_path}: {exc}")
+            raise Exception(f"Could not read file {self.file_path}: {exc}")
         insert_result: InsertOneResult = skull["files"].insert_one(
             {
                 "filename": self.file_name,
-             "content": data,
-             "content_decoded": data.decode()
-             }
+                "content": data,
+                "content_decoded": data.decode(),
+            }
         )
         if insert_result is None:
-            raise Exception('Could not download file "{self.file_path}" to database')
+            raise Exception(f"Could not download file '{self.file_path}' to database")
         self.store_metadata(skull, run_id, "files", insert_result.inserted_id)
         self.log("OK, exiting", level="SUCCESS")
 

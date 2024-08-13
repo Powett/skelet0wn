@@ -53,9 +53,9 @@ class Kerbrute(Bone):
         insert_result: InsertOneResult = skull["files"].insert_one(
             {
                 "filename": "kerbrute_userenum.txt",
-             "content": outputRaw,
-             "content_decoded": outputRaw.decode()
-             }
+                "content": outputRaw,
+                "content_decoded": outputRaw.decode(),
+            }
         )
         if insert_result is None or insert_result.acknowledged is False:
             raise Exception("Could not insert element in files")

@@ -126,9 +126,7 @@ class NxcSmb(Bone):
                             domain = domain_result["domain"]
                             update["$set"]["domain"] = domain.lower()
 
-                        result = skull["users"].update_one(
-                            query, update, upsert=True
-                        )
+                        result = skull["users"].update_one(query, update, upsert=True)
                         if result.upserted_id:
                             self.log(f"Added user {username}", level="DEBUG")
                     else:

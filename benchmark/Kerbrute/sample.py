@@ -5,7 +5,7 @@ from loguru import logger
 from pymongo import MongoClient
 
 from skelet0wn.limbs.bones import Kerbrute
-from skelet0wn.limbs.joints import ShareFile, Sequence, UploadFile
+from skelet0wn.limbs.joints import Sequence, ShareFile, UploadFile
 from skelet0wn.utilities import logger_setup
 
 logger_setup()

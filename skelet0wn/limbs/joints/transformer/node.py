@@ -51,9 +51,7 @@ class Transformer(Joint):
         result: Any = self.transformation(values)
 
         self.log(f"Obtained {result}", depth_increment=1, level="DEBUG")
-        insert_result: InsertOneResult = skull["temp"].insert_one(
-            {"result": result}
-        )
+        insert_result: InsertOneResult = skull["temp"].insert_one({"result": result})
         if insert_result is None or insert_result.acknowledged is False:
             raise Exception("Could not insert element in temp")
         self.store_metadata(

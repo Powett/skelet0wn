@@ -73,8 +73,10 @@ class Bone(Limb):
         self.log(f"Building {docker_image_tag} image... ")
         try:
             docker_skull_client = docker.from_env()
-            self.docker_image, self.docker_build_logs = docker_skull_client.images.build(
-                path=self.docker_dockerfile_directory, tag=self.docker_image_tag
+            self.docker_image, self.docker_build_logs = (
+                docker_skull_client.images.build(
+                    path=self.docker_dockerfile_directory, tag=self.docker_image_tag
+                )
             )
             for log in self.docker_build_logs:
                 self.log(f"{log}", level="TRACE")
@@ -239,12 +241,22 @@ class Bone(Limb):
                     )
                     try:
                         for f in field_list:
+                            self.log(
+                                f"Dereferencing field {f} of {field_result}",
+                                depth_increment=3,
+                                level="TRACE",
+                            )
                             assert field_result is not None
                             field_result = field_result[f]
-                    except:
+                            self.log(
+                                f"Obtained new object {field_result}",
+                                depth_increment=4,
+                                level="TRACE",
+                            )
+                    except Exception as exc:
                         # Missing a parameter
                         self.log(
-                            f"Field {field} of type {t}, no value found",
+                            f"Field {field} of type {t}, no value found ({exc})",
                             depth_increment=3,
                             level="WARNING",
                         )
@@ -434,6 +446,4 @@ class Bone(Limb):
             other_fields["command"] = self.built_command
         except Exception as exc:
             self.log(f"Error while storing metadata: {exc}", level="ERROR")
-        super().store_metadata(
-            skull, run_id, outputCollection, outputID, other_fields
-        )
+        super().store_metadata(skull, run_id, outputCollection, outputID, other_fields)
